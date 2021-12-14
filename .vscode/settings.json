@@ -1,0 +1,10 @@
+{
+  "csharp.format.enable": true,
+  "csharpextensions.privateMemberPrefix": "_",
+  "csharpextensions.useThisForCtorAssignments": false,
+  "[csharp]": {
+    "editor.tabSize": 4
+  },
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active"
+}
