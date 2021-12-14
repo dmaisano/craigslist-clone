@@ -13,8 +13,8 @@ namespace API.Entities
         [Required] public byte[] PasswordSalt { get; set; }
         [Required] public string City { get; set; }
         [Required] public UserRole Role { get; set; }
-        [Required] public DateTime CreatedOn { get; set; }
-        [Required] public DateTime UpdatedOn { get; set; }
+        [Required] public DateTime CreatedOn { get; set; } = DateTime.Now;
+        [Required] public DateTime UpdatedOn { get; set; } = DateTime.Now;
     }
 
     public enum UserRole
