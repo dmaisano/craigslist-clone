@@ -1,5 +1,6 @@
 using API.Data;
 using API.Extensions;
+using API.Utilities;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,7 @@ namespace API
         {
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly); // ? Import the automapper util method
             services.AddDbContext<DataContext>(options =>
             {
                 options.UseSqlite(_config.GetConnectionString("DefaultConnection"));

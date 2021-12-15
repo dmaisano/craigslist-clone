@@ -1,3 +1,6 @@
+using API.DTOs;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Repositories
@@ -5,7 +8,7 @@ namespace API.Data.Repositories
     public interface IUserRepository
     {
         Task<AppUser> AddUserAsync(AppUser user);
-        Task<IEnumerable<AppUser>> GetUsersAsync();
+        Task<IEnumerable<MemberDto>> GetMembersAsync();
         Task<AppUser> GetUserByIdAsync(int id);
         Task<AppUser> GetUserByEmailOrUsernameAsync(string usernameOrEmail);
         Task<bool> UserExistsAsync(string username = null, string email = null);
@@ -14,8 +17,10 @@ namespace API.Data.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly DataContext _context;
-        public UserRepository(DataContext context)
+        private readonly IMapper _mapper;
+        public UserRepository(DataContext context, IMapper mapper)
         {
+            _mapper = mapper;
             _context = context;
         }
 
@@ -38,9 +43,13 @@ namespace API.Data.Repositories
                 .SingleOrDefaultAsync(x => x.UserName == usernameOrEmail || x.Email == usernameOrEmail);
         }
 
-        public async Task<IEnumerable<AppUser>> GetUsersAsync()
+        // ? I could overload this method and provide optional params for narrowing search results and reduce overfetching
+        public async Task<IEnumerable<MemberDto>> GetMembersAsync()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users
+                .OrderByDescending(x => x.Id)
+                .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
         }
 
         public async Task<bool> UserExistsAsync(string username = null, string email = null)
