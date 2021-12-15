@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211215150449_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20211215163225_ModifiedItemCategoryColToInt")]
+    partial class ModifiedItemCategoryColToInt
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,21 +64,21 @@ namespace API.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2021, 12, 15, 10, 4, 49, 581, DateTimeKind.Local).AddTicks(5250),
-                            PasswordHash = new byte[] { 29, 92, 80, 204, 74, 124, 140, 160, 210, 242, 138, 188, 225, 26, 102, 0, 244, 66, 190, 9, 248, 139, 94, 212, 121, 94, 224, 64, 36, 84, 42, 45, 167, 2, 111, 230, 156, 195, 227, 25, 146, 32, 181, 16, 88, 38, 173, 216, 144, 109, 41, 153, 86, 100, 228, 59, 163, 166, 14, 184, 230, 249, 127, 184 },
-                            PasswordSalt = new byte[] { 121, 139, 115, 19, 57, 98, 46, 158, 246, 140, 159, 11, 210, 24, 191, 169, 119, 7, 130, 70, 186, 83, 134, 102, 94, 27, 114, 241, 148, 12, 52, 197, 131, 51, 197, 95, 211, 15, 122, 254, 80, 218, 231, 198, 217, 66, 203, 152, 228, 85, 34, 191, 35, 230, 7, 138, 231, 140, 206, 237, 25, 108, 221, 59, 16, 91, 203, 8, 247, 1, 210, 86, 21, 109, 177, 69, 12, 113, 2, 203, 129, 45, 219, 82, 239, 75, 46, 216, 21, 57, 91, 27, 149, 197, 144, 200, 41, 90, 197, 188, 102, 44, 248, 193, 189, 209, 90, 187, 56, 101, 123, 22, 125, 52, 24, 94, 75, 193, 104, 142, 137, 238, 110, 208, 240, 90, 51, 198 },
+                            CreatedOn = new DateTime(2021, 12, 15, 11, 32, 25, 521, DateTimeKind.Local).AddTicks(5706),
+                            PasswordHash = new byte[] { 50, 24, 41, 28, 187, 34, 179, 77, 172, 7, 255, 22, 110, 186, 98, 226, 227, 248, 77, 64, 96, 207, 236, 15, 32, 95, 203, 133, 42, 249, 250, 100, 196, 46, 39, 126, 111, 241, 174, 64, 13, 166, 121, 102, 13, 69, 137, 112, 83, 195, 66, 54, 253, 131, 58, 53, 244, 119, 245, 3, 102, 160, 142, 71 },
+                            PasswordSalt = new byte[] { 90, 65, 168, 129, 201, 176, 170, 97, 132, 118, 96, 237, 33, 40, 186, 194, 145, 199, 32, 52, 30, 7, 128, 160, 113, 52, 125, 68, 39, 134, 174, 29, 15, 122, 48, 186, 70, 57, 27, 250, 136, 255, 180, 0, 19, 85, 60, 119, 255, 8, 244, 195, 170, 29, 212, 14, 207, 130, 242, 98, 201, 62, 126, 100, 58, 74, 14, 134, 6, 127, 80, 44, 13, 161, 215, 222, 114, 195, 39, 79, 241, 90, 58, 185, 183, 49, 118, 206, 67, 20, 174, 163, 233, 211, 171, 39, 170, 225, 79, 179, 143, 212, 55, 217, 118, 190, 146, 218, 107, 98, 136, 244, 170, 209, 201, 229, 97, 212, 55, 82, 171, 107, 158, 185, 231, 121, 72, 38 },
                             Role = "Admin",
-                            UpdatedOn = new DateTime(2021, 12, 15, 10, 4, 49, 581, DateTimeKind.Local).AddTicks(5252),
+                            UpdatedOn = new DateTime(2021, 12, 15, 11, 32, 25, 521, DateTimeKind.Local).AddTicks(5708),
                             UserName = "admin"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2021, 12, 15, 10, 4, 49, 581, DateTimeKind.Local).AddTicks(5325),
-                            PasswordHash = new byte[] { 182, 126, 102, 190, 99, 130, 143, 244, 204, 79, 55, 125, 72, 216, 65, 219, 152, 102, 2, 220, 68, 134, 242, 3, 241, 204, 199, 123, 182, 76, 209, 83, 91, 207, 251, 216, 210, 55, 86, 241, 15, 198, 161, 136, 21, 255, 72, 77, 104, 160, 126, 84, 48, 71, 70, 239, 134, 156, 201, 225, 188, 199, 232, 85 },
-                            PasswordSalt = new byte[] { 236, 234, 241, 89, 142, 30, 179, 104, 99, 164, 109, 207, 14, 21, 40, 139, 2, 126, 236, 247, 93, 47, 137, 25, 169, 223, 215, 148, 89, 209, 68, 26, 242, 90, 52, 139, 244, 55, 202, 185, 11, 22, 98, 54, 53, 38, 255, 249, 164, 55, 123, 150, 132, 67, 64, 66, 170, 19, 207, 168, 106, 142, 228, 194, 221, 167, 147, 79, 174, 6, 87, 98, 170, 169, 243, 133, 206, 76, 39, 227, 233, 212, 87, 157, 58, 231, 85, 26, 128, 109, 47, 11, 238, 109, 119, 144, 102, 140, 220, 244, 230, 61, 240, 224, 154, 236, 0, 62, 229, 173, 181, 181, 56, 45, 51, 229, 117, 191, 59, 209, 155, 46, 180, 4, 231, 157, 178, 38 },
+                            CreatedOn = new DateTime(2021, 12, 15, 11, 32, 25, 521, DateTimeKind.Local).AddTicks(5741),
+                            PasswordHash = new byte[] { 48, 80, 88, 78, 93, 168, 127, 200, 140, 206, 127, 130, 46, 12, 228, 199, 220, 4, 86, 22, 7, 214, 36, 209, 176, 33, 29, 158, 123, 239, 14, 244, 191, 85, 120, 79, 255, 18, 134, 45, 76, 146, 36, 71, 191, 114, 126, 74, 123, 137, 135, 85, 140, 156, 27, 137, 4, 9, 22, 194, 5, 75, 234, 115 },
+                            PasswordSalt = new byte[] { 199, 63, 132, 162, 139, 236, 242, 236, 166, 145, 70, 156, 57, 127, 87, 4, 142, 247, 63, 6, 129, 33, 175, 144, 9, 5, 140, 65, 174, 143, 16, 170, 163, 153, 139, 213, 189, 196, 235, 175, 151, 210, 147, 81, 183, 189, 189, 36, 187, 163, 218, 55, 25, 218, 127, 1, 69, 188, 16, 38, 231, 200, 169, 222, 92, 159, 176, 254, 74, 20, 188, 43, 55, 105, 5, 186, 144, 218, 209, 41, 201, 239, 110, 223, 236, 80, 202, 119, 232, 54, 72, 28, 206, 22, 225, 173, 84, 92, 45, 196, 169, 5, 80, 185, 3, 133, 235, 243, 159, 177, 180, 233, 141, 201, 120, 125, 214, 188, 5, 250, 28, 217, 147, 160, 95, 103, 140, 255 },
                             Role = "Member",
-                            UpdatedOn = new DateTime(2021, 12, 15, 10, 4, 49, 581, DateTimeKind.Local).AddTicks(5327),
+                            UpdatedOn = new DateTime(2021, 12, 15, 11, 32, 25, 521, DateTimeKind.Local).AddTicks(5743),
                             UserName = "member"
                         });
                 });
@@ -160,14 +160,18 @@ namespace API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("Archived")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(false);
+
                     b.Property<string>("CategoryName")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Condition")
-                        .IsRequired()
+                    b.Property<int>("Condition")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT")
-                        .HasDefaultValue("Fair");
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(4);
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
@@ -199,9 +203,10 @@ namespace API.Migrations
                         new
                         {
                             Id = 1,
+                            Archived = false,
                             CategoryName = "Furniture",
-                            Condition = "Excellent",
-                            CreatedOn = new DateTime(2021, 12, 15, 10, 4, 49, 581, DateTimeKind.Local).AddTicks(6683),
+                            Condition = 2,
+                            CreatedOn = new DateTime(2021, 12, 15, 11, 32, 25, 521, DateTimeKind.Local).AddTicks(7127),
                             Description = "Round folding dining table from Bob's Furniture Store.\nGreat for smaller dining areas/apartments. Smoke-free home.\n\nAsking price - $50.",
                             OwnerId = 2,
                             Price = 50.0,
@@ -210,9 +215,10 @@ namespace API.Migrations
                         new
                         {
                             Id = 2,
+                            Archived = false,
                             CategoryName = "Electronics",
-                            Condition = "New",
-                            CreatedOn = new DateTime(2021, 12, 15, 10, 4, 49, 581, DateTimeKind.Local).AddTicks(6697),
+                            Condition = 0,
+                            CreatedOn = new DateTime(2021, 12, 15, 11, 32, 25, 521, DateTimeKind.Local).AddTicks(7139),
                             Description = "Absolutely brand new in the box (unopened box) 55 inch TCL 4K UHD Smart Roku TV.\n.Condition: Brand New In the (unopened). Same condition as you get from a store. Price: $330 Cash and Pick up only.",
                             OwnerId = 2,
                             Price = 330.0,

@@ -6,6 +6,8 @@ namespace API.Data
     public interface IUnitOfWork
     {
         IUserRepository UserRepository { get; }
+        IItemCategoryRepository ItemCategoryRepository { get; }
+        ItemListingRepository ItemListingRepository { get; }
         Task<bool> Complete();
         bool HasChanges();
     }
@@ -21,6 +23,10 @@ namespace API.Data
         }
 
         public IUserRepository UserRepository => new UserRepository(_context, _mapper);
+
+        public IItemCategoryRepository ItemCategoryRepository => new ItemCategoryRepository(_context, _mapper);
+
+        public ItemListingRepository ItemListingRepository => new ItemListingRepository(_context, _mapper);
 
         public async Task<bool> Complete()
         {

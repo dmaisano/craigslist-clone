@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
 namespace API.Entities
 {
@@ -21,7 +20,9 @@ namespace API.Entities
         public DateTime CreatedOn { get; set; } = DateTime.Now;
 
         [Required]
-        public ItemCondition Condition { get; set; } = ItemCondition.Fair;
+        public ItemCondition Condition { get; set; }
+
+        public bool Archived { get; set; } // ? Item could be sold or deleted by the user
 
         public ICollection<ItemImage> Images { get; set; }
 

@@ -69,16 +69,20 @@ namespace API.Data
                 };
             }).ToArray();
 
-            builder.Entity<ItemListing>()
-                .Property(e => e.Condition)
-                .HasConversion(new EnumToStringConverter<ItemCondition>());
-            builder.Entity<ItemListing>()
-               .Property(e => e.Condition)
-               .HasDefaultValue(ItemCondition.Fair);
+            // builder.Entity<ItemListing>()
+            //     .Property(e => e.Condition)
+            //     .HasConversion(new EnumToStringConverter<ItemCondition>());
+            // builder.Entity<ItemListing>()
+            //    .Property(e => e.Condition)
+            //    .HasDefaultValue(ItemCondition.Fair);
 
             builder.Entity<ItemListing>()
                .Property(e => e.CreatedOn)
                .HasDefaultValueSql("datetime('now')");
+
+            builder.Entity<ItemListing>()
+                .Property(e => e.Archived)
+                .HasDefaultValue(false);
 
             builder.Entity<ItemListing>()
                 .HasOne(i => i.Category)

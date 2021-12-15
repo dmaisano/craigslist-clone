@@ -8,6 +8,7 @@ namespace API.Utilities
         public AutoMapperProfiles()
         {
             CreateMap<AppUser, MemberDto>();
+            CreateMap<AddItemListingDto, ItemListing>();
         }
     }
 }
