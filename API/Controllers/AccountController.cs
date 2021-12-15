@@ -3,6 +3,7 @@ using System.Text;
 using API.Data;
 using API.Data.Repositories;
 using API.DTOs;
+using API.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -11,8 +12,10 @@ namespace API.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserRepository _userRepo;
-        public AccountController(IUnitOfWork unitOfWork)
+        private readonly ITokenService _tokenService;
+        public AccountController(IUnitOfWork unitOfWork, ITokenService tokenService)
         {
+            _tokenService = tokenService;
             _unitOfWork = unitOfWork;
             _userRepo = _unitOfWork.UserRepository;
         }
@@ -25,11 +28,12 @@ namespace API.Controllers
 
             if (await _userRepo.UserExistsAsync(username, email)) return BadRequest("User already exists");
 
+            var user = new AppUser();
             try
             {
                 // ? Hash and salt the user's creds
                 using var hmac = new HMACSHA512();
-                var user = new AppUser
+                user = new AppUser
                 {
                     UserName = username,
                     Email = email,
@@ -51,7 +55,7 @@ namespace API.Controllers
             return new UserDto
             {
                 Username = username,
-                Token = "NOT IMPLEMENTED",
+                Token = _tokenService.CreateToken(user),
             };
         }
 
@@ -73,7 +77,7 @@ namespace API.Controllers
             return new UserDto
             {
                 Username = user.UserName,
-                Token = "NOT IMPLEMENTED",
+                Token = _tokenService.CreateToken(user),
             };
         }
     }
