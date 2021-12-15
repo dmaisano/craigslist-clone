@@ -7,9 +7,10 @@ namespace API.DTOs
         public int Id { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
+        [JsonIgnore] public string Password { get; set; }
         public string City { get; set; }
-        [JsonIgnore] public UserRole Role { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime UpdatedOn { get; set; }
+        [JsonIgnore] public UserRole Role { get; set; } = UserRole.Member;
+        public DateTime CreatedOn { get; set; } = DateTime.Now;
+        public DateTime UpdatedOn { get; set; } = DateTime.Now;
     }
 }

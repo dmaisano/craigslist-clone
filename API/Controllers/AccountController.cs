@@ -4,6 +4,7 @@ using API.Data;
 using API.Data.Repositories;
 using API.DTOs;
 using API.Services;
+using API.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -31,16 +32,16 @@ namespace API.Controllers
             var user = new AppUser();
             try
             {
-                // ? Hash and salt the user's creds
-                using var hmac = new HMACSHA512();
+                var secureCreds = PasswordSerialization.HashPassword(registerDto.Password);
+
                 user = new AppUser
                 {
                     UserName = username,
                     Email = email,
-                    PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-                    PasswordSalt = hmac.Key,
+                    PasswordHash = secureCreds.PasswordHash,
+                    PasswordSalt = secureCreds.PasswordSalt,
                     City = registerDto.City,
-                    Role = UserRole.User,
+                    Role = UserRole.Member,
                 };
 
                 await _userRepo.AddUserAsync(user);
@@ -66,13 +67,13 @@ namespace API.Controllers
 
             if (user == null) return Unauthorized(); // ? I'm being vague here to not give any details to potential phishers
 
-            using var hmac = new HMACSHA512(user.PasswordSalt);
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
+            var passwordMatch = PasswordSerialization.VerifyPassword(
+                loginDto.Password,
+                user.PasswordHash,
+                user.PasswordSalt
+            );
 
-            for (int i = 0; i < computedHash.Length; i++)
-            {
-                if (computedHash[i] != user.PasswordHash[i]) return Unauthorized();
-            }
+            if (!passwordMatch) return Unauthorized();
 
             return new UserDto
             {

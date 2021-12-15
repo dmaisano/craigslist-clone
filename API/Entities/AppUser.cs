@@ -12,14 +12,14 @@ namespace API.Entities
         [Required] public byte[] PasswordHash { get; set; }
         [Required] public byte[] PasswordSalt { get; set; }
         [Required] public string City { get; set; }
-        [Required] public UserRole Role { get; set; }
+        [Required] public UserRole Role { get; set; } = UserRole.Member;
         [Required] public DateTime CreatedOn { get; set; } = DateTime.Now;
         [Required] public DateTime UpdatedOn { get; set; } = DateTime.Now;
     }
 
     public enum UserRole
     {
+        Member,
         Admin,
-        User,
     }
 }
