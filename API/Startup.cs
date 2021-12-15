@@ -46,6 +46,12 @@ namespace API
                         ValidateLifetime = true, // ? Reject expired tokens
                     };
                 });
+
+            // ? Reference: https://docs.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-6.0
+            services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
