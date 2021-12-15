@@ -1,4 +1,6 @@
 using API.Data;
+using API.Extensions;
+using API.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace API
@@ -8,7 +10,7 @@ namespace API
         private readonly IConfiguration _config;
         public Startup(IConfiguration config)
         {
-            this._config = config;
+            _config = config;
         }
 
         public IConfiguration Configuration { get; }
@@ -16,7 +18,7 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // TODO: Need to create JWT token service
+            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddDbContext<DataContext>(options =>
             {
@@ -26,6 +28,8 @@ namespace API
             services.AddControllers();
 
             services.AddCors();
+
+            services.AddIdentityServices(_config);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
