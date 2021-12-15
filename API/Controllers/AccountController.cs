@@ -1,5 +1,3 @@
-using System.Security.Cryptography;
-using System.Text;
 using API.Data;
 using API.Data.Repositories;
 using API.DTOs;
@@ -25,9 +23,8 @@ namespace API.Controllers
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
             var username = registerDto.Username.ToLower();
-            var email = registerDto.Username.ToLower();
 
-            if (await _userRepo.UserExistsAsync(username, email)) return BadRequest("User already exists");
+            if (await _userRepo.UserExistsAsync(username)) return BadRequest("User already exists");
 
             var user = new AppUser();
             try
@@ -37,10 +34,8 @@ namespace API.Controllers
                 user = new AppUser
                 {
                     UserName = username,
-                    Email = email,
                     PasswordHash = secureCreds.PasswordHash,
                     PasswordSalt = secureCreds.PasswordSalt,
-                    City = registerDto.City,
                     Role = UserRole.Member,
                 };
 
@@ -63,7 +58,7 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
-            var user = await _userRepo.GetUserByEmailOrUsernameAsync(loginDto.UsernameOrEmail);
+            var user = await _userRepo.GetUserByUsernameAsync(loginDto.Username);
 
             if (user == null) return Unauthorized(); // ? I'm being vague here to not give any details to potential phishers
 

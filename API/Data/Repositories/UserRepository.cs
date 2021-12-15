@@ -10,8 +10,8 @@ namespace API.Data.Repositories
         Task<AppUser> AddUserAsync(AppUser user);
         Task<IEnumerable<MemberDto>> GetMembersAsync();
         Task<AppUser> GetUserByIdAsync(int id);
-        Task<AppUser> GetUserByEmailOrUsernameAsync(string usernameOrEmail);
-        Task<bool> UserExistsAsync(string username = null, string email = null);
+        Task<AppUser> GetUserByUsernameAsync(string username);
+        Task<bool> UserExistsAsync(string username = null);
     }
 
     public class UserRepository : IUserRepository
@@ -36,11 +36,11 @@ namespace API.Data.Repositories
             return await _context.Users.FindAsync(id);
         }
 
-        public async Task<AppUser> GetUserByEmailOrUsernameAsync(string usernameOrEmail)
+        public async Task<AppUser> GetUserByUsernameAsync(string username)
         {
-            usernameOrEmail = usernameOrEmail.ToLower();
+            username = username.ToLower();
             return await _context.Users
-                .SingleOrDefaultAsync(x => x.UserName == usernameOrEmail || x.Email == usernameOrEmail);
+                .SingleOrDefaultAsync(x => x.UserName == username);
         }
 
         // ? I could overload this method and provide optional params for narrowing search results and reduce overfetching
@@ -52,27 +52,11 @@ namespace API.Data.Repositories
                 .ToListAsync();
         }
 
-        public async Task<bool> UserExistsAsync(string username = null, string email = null)
+        public async Task<bool> UserExistsAsync(string username = null)
         {
-            var userQuery = _context.Users.AsQueryable();
+            if (username == null) return false;
 
-            if (username != null)
-            {
-                username = username.ToLower();
-                var queryResult = await userQuery.AnyAsync(x => x.UserName == username);
-
-                if (queryResult) return true;
-            }
-
-            if (email != null)
-            {
-                email = username.ToLower();
-                var queryResult = await userQuery.AnyAsync(x => x.Email == email);
-
-                if (queryResult) return true;
-            }
-
-            return false;
+            return await _context.Users.AnyAsync(x => x.UserName == username);
         }
     }
 }

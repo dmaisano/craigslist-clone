@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace API.Entities
 {
@@ -17,14 +18,15 @@ namespace API.Entities
 
         public string Description { get; set; } // ? If a user was really lazy they might omit a description (not recommended), making this optional
 
+        public DateTime CreatedOn { get; set; } = DateTime.Now;
+
         [Required]
         public ItemCondition Condition { get; set; } = ItemCondition.Fair;
 
         public ICollection<ItemImage> Images { get; set; }
 
-        // ? I would like to ideally have the PK be an index string "name" for the categories
-        // ? For performance I'll just stick to a default auto increment int id
-        public int CategoryId { get; set; }
+
+        public string CategoryName { get; set; }
         public ItemCategory Category { get; set; }
 
         public int OwnerId { get; set; }
