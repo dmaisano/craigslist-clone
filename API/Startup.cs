@@ -1,8 +1,10 @@
 using API.Data;
-using API.Extensions;
 using API.Utilities;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
 
 namespace API
 {
@@ -31,7 +33,19 @@ namespace API
 
             services.AddCors();
 
-            services.AddIdentityServices(_config);
+            // ? Reference: https://www.codemag.com/Article/2105051/Implementing-JWT-Authentication-in-ASP.NET-Core-5
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["TokenKey"])), // ? The JWT secret
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateLifetime = true, // ? Reject expired tokens
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +65,7 @@ namespace API
                 .AllowCredentials()
                 .WithOrigins("http://localhost:1234"));
 
+            app.UseAuthentication(); // ? This must be called before UseAuthorization()
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
