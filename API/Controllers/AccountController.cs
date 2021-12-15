@@ -40,12 +40,8 @@ namespace API.Controllers
                 };
 
                 await _userRepo.AddUserAsync(user);
-                var savedChanges = await _unitOfWork.Complete();
 
-                if (!savedChanges)
-                {
-                    throw new Exception("Failed to create user");
-                }
+                if (!await _unitOfWork.Complete()) throw new Exception("Failed to create user");
             }
             catch (Exception)
             {
@@ -55,6 +51,28 @@ namespace API.Controllers
             return new UserDto
             {
                 Username = username,
+                Token = "NOT IMPLEMENTED",
+            };
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        {
+            var user = await _userRepo.GetUserByEmailOrUsernameAsync(loginDto.UsernameOrEmail);
+
+            if (user == null) return Unauthorized(); // ? I'm being vague here to not give any details to potential phishers
+
+            using var hmac = new HMACSHA512(user.PasswordSalt);
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
+
+            for (int i = 0; i < computedHash.Length; i++)
+            {
+                if (computedHash[i] != user.PasswordHash[i]) return Unauthorized();
+            }
+
+            return new UserDto
+            {
+                Username = user.UserName,
                 Token = "NOT IMPLEMENTED",
             };
         }
