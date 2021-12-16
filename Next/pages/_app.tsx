@@ -1,6 +1,13 @@
 import type { AppProps } from "next/app";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { mode } from "@chakra-ui/theme-tools";
+import { createContext, useContext } from "react";
+import { IUser } from "../model/user.model";
+import {
+  usePersistedUser,
+  PersistedUserResponse,
+} from "../utils/usePersistedUser";
+import { DEFAULT_USER } from "../constants";
 
 const theme = extendTheme({
   styles: {
@@ -19,10 +26,19 @@ const theme = extendTheme({
   },
 });
 
+export const AppUserContext = createContext<PersistedUserResponse>([
+  DEFAULT_USER,
+  () => {},
+]);
+
 function MyApp({ Component, pageProps }: AppProps) {
+  const [user, setUser] = usePersistedUser(DEFAULT_USER);
+
   return (
     <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
+      <AppUserContext.Provider value={[user, setUser]}>
+        <Component {...pageProps} />
+      </AppUserContext.Provider>
     </ChakraProvider>
   );
 }

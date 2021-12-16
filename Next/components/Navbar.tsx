@@ -1,25 +1,21 @@
-import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
+import { Button, Flex, Heading, Text } from "@chakra-ui/react";
 import { isBrowser } from "@chakra-ui/utils";
 import { useRouter } from "next/router";
-import React from "react";
-import { User } from "../model/user.model";
-import usePersistedState from "../utils/usePersistedState";
+import React, { useContext } from "react";
+import { DEFAULT_USER } from "../constants";
+import { AppUserContext } from "../pages/_app";
 import NextChakraLink from "./NextChakraLink";
 
-interface NavbarProps {}
-
-const Navbar: React.FC<NavbarProps> = ({}) => {
-  const [{ username, token }] = usePersistedState<User>(`user`, {
-    username: ``,
-    token: ``,
-  });
+const Navbar: React.FC = ({}) => {
+  const [user, setUser] = useContext(AppUserContext);
   const router = useRouter();
 
   const logout = () => {
     if (!isBrowser) return;
 
-    localStorage.removeItem(`user`);
-    router.push(`/`);
+    // ? I could have optionally removed the user key from localstorage. What I've done here also works 👍
+    setUser(DEFAULT_USER);
+    router.replace(`/`);
   };
 
   return (
@@ -42,13 +38,13 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
         </Heading>
 
         <Flex alignItems="center" fontWeight="semibold">
-          {username && token ? (
+          {user.username && user.token ? (
             <>
               <Text color="gray.200" float="left" mr="4">
-                logged in as {`"${username}"`}
+                logged in as {`"${user.username}"`}
               </Text>
 
-              <Button onClick={() => logout}>Logout</Button>
+              <Button onClick={() => logout()}>Logout</Button>
             </>
           ) : (
             <>

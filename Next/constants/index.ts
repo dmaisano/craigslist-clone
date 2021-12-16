@@ -1,3 +1,5 @@
+import { IUser } from "../model/user.model";
+
 export const API_URL = `http://localhost:5100/api`;
 
-export const IsBrowser = typeof window === undefined;
+export const DEFAULT_USER: IUser = { username: ``, token: `` };

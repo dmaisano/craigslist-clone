@@ -1,15 +1,15 @@
 import { isBrowser } from "@chakra-ui/utils";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { IsBrowser } from "../constants";
-import { User } from "../model/user.model";
+import { DEFAULT_USER } from "../constants";
+import { IUser } from "../model/user.model";
 
-type Response = [User, Dispatch<SetStateAction<User>>];
+export type PersistedUserResponse = [IUser, Dispatch<SetStateAction<IUser>>];
 
 export const usePersistedUser = (
-  initialState: User = { username: ``, token: `` },
-): Response => {
+  initialState: IUser = DEFAULT_USER,
+): PersistedUserResponse => {
   const key = `user`;
-  const [state, setState] = useState<User>(() => {
+  const [state, setState] = useState<IUser>(() => {
     if (isBrowser) {
       const storageValue = localStorage.getItem(key);
 
@@ -22,7 +22,10 @@ export const usePersistedUser = (
   });
 
   useEffect(() => {
-    if (IsBrowser) {
+    console.log(`I RAN`);
+
+    if (isBrowser) {
+      console.log(`IS BROWSER`);
       localStorage.setItem(key, JSON.stringify(state));
     }
   }, [key, state]);

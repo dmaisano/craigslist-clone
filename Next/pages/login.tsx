@@ -1,11 +1,40 @@
-import { Container } from "@chakra-ui/react";
+import {
+  Button,
+  Container,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  Input,
+} from "@chakra-ui/react";
+import { isBrowser } from "@chakra-ui/utils";
+import { DevTool } from "@hookform/devtools";
 import { NextPage } from "next";
 import Head from "next/head";
-import React from "react";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Layout } from "../components";
 import RegisterLoginForm from "../components/RegisterLoginForm";
 
+type FormValues = {
+  username: string;
+  password: string;
+};
+
 const Login: NextPage = ({}) => {
+  const [foo, setFoo] = useState("foo");
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors, isSubmitting, isValid },
+  } = useForm<FormValues>({
+    mode: `onChange`,
+    reValidateMode: `onChange`,
+    defaultValues: { username: ``, password: `` },
+  });
+
+  const onSubmit = handleSubmit((data) => console.log({ data }));
+
   return (
     <>
       <Head>
@@ -15,8 +44,8 @@ const Login: NextPage = ({}) => {
       </Head>
 
       <Layout>
-        <Container mt="8" maxW="container.sm">
-          <RegisterLoginForm action="login" />
+        <Container mt="8" maxW="480px">
+          <RegisterLoginForm action="register" />
         </Container>
       </Layout>
     </>
