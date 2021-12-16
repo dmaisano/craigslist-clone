@@ -1,8 +1,38 @@
-import { NextPage } from "next";
+import axios from "axios";
+import {
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  NextPage,
+} from "next";
 import Head from "next/head";
 import { Layout } from "../components";
+import { API_URL } from "../constants";
+import { IItemListing } from "../model/items.mode";
 
-const HomePage: NextPage = () => {
+export const getServerSideProps: GetServerSideProps<{
+  items: IItemListing[];
+}> = async () => {
+  let items: IItemListing[] = [];
+
+  try {
+    const res = await axios.get<IItemListing[]>(`${API_URL}/item-listing`);
+
+    if (res.data && res.data.length > 0) {
+      items = res.data;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  return {
+    props: {
+      items,
+    },
+  };
+};
+
+const HomePage: NextPage<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ items }) => {
   return (
     <>
       <Head>
@@ -11,7 +41,11 @@ const HomePage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout></Layout>
+      <Layout>
+        <p>items</p>
+
+        {JSON.stringify(items)}
+      </Layout>
     </>
   );
 };
