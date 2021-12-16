@@ -9,6 +9,8 @@ namespace API.Utilities
         {
             CreateMap<AppUser, MemberDto>();
             CreateMap<AddItemListingDto, ItemListing>();
+            // CreateMap<ItemListing, ItemListingDto>();
+            CreateMap<ItemImage, PhotoDto>();
         }
     }
 }

@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace API.DTOs
@@ -17,7 +16,7 @@ namespace API.DTOs
         [Required]
         public ItemCondition Condition { get; set; }
 
-        public string ConditionStr { get; set; }
+        public IFormFileCollection FileImages { get; set; }
 
         [Required]
         public string CategoryName { get; set; }

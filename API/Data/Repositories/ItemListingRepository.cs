@@ -1,62 +1,100 @@
 using API.DTOs;
+using API.Services;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Repositories
 {
     public interface IItemListingRepository
     {
-        Task<AppUser> AddUserAsync(AppUser user);
-        Task<IEnumerable<MemberDto>> GetMembersAsync();
-        Task<AppUser> GetUserByIdAsync(int id);
-        Task<AppUser> GetUserByUsernameAsync(string username);
-        Task<bool> UserExistsAsync(string username = null);
+
     }
 
-    public class ItemListingRepository : IUserRepository
+    public class ItemListingRepository : IItemListingRepository
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-        public ItemListingRepository(DataContext context, IMapper mapper)
+        private readonly IPhotoService _photoService;
+        public ItemListingRepository(DataContext context, IMapper mapper,
+            IPhotoService photoService)
         {
-            _mapper = mapper;
             _context = context;
+            _mapper = mapper;
+            _photoService = photoService;
         }
 
-        public async Task<AppUser> AddUserAsync(AppUser user)
+        public async Task<ItemListingDto> AddNewItem(AddItemListingDto dto, int userId)
         {
-            user.UserName = user.UserName.ToLower(); // ? normalizing username
-            await _context.Users.AddAsync(user);
-            return user;
-        }
+            var itemToReturn = new ItemListingDto();
+            var imagesToReturn = new List<PhotoDto>();
+            var errors = new Dictionary<string, string>();
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            var savepoint = "";
 
-        public async Task<AppUser> GetUserByIdAsync(int id)
-        {
-            return await _context.Users.FindAsync(id);
-        }
+            try
+            {
+                var itemListing = new ItemListing
+                {
+                    Title = dto.Title,
+                    Price = dto.Price,
+                    Description = dto.Description,
+                    Condition = dto.Condition,
+                    Images = new List<ItemImage>(),
+                    CategoryName = dto.CategoryName,
+                    OwnerId = userId,
+                };
+                await _context.AddAsync(itemListing);
+                await _context.SaveChangesAsync();
 
-        public async Task<AppUser> GetUserByUsernameAsync(string username)
-        {
-            username = username.ToLower();
-            return await _context.Users
-                .SingleOrDefaultAsync(x => x.UserName == username);
-        }
+                savepoint = "BeforeInsertItemImages";
+                await transaction.CreateSavepointAsync(savepoint);
 
-        // ? I could overload this method and provide optional params for narrowing search results and reduce overfetching
-        public async Task<IEnumerable<MemberDto>> GetMembersAsync()
-        {
-            return await _context.Users
-                .OrderByDescending(x => x.Id)
-                .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
-        }
+                for (int i = 0; i < dto.FileImages.Count; i++)
+                {
+                    var fileImage = dto.FileImages[i];
+                    var result = await _photoService.AddPhotoAsync(fileImage);
 
-        public async Task<bool> UserExistsAsync(string username = null)
-        {
-            if (username == null) return false;
+                    if (result.Error != null)
+                    {
+                        errors.Add(fileImage.FileName, result.Error.Message);
+                    }
 
-            return await _context.Users.AnyAsync(x => x.UserName == username);
+                    var image = new ItemImage
+                    {
+                        Url = result.Url.AbsoluteUri,
+                        PublicId = result.PublicId,
+                        IsMain = i == 0,
+                        ItemListingId = itemListing.Id,
+                        OwnerId = userId,
+                    };
+
+                    await _context.AddAsync(image);
+                    await _context.SaveChangesAsync();
+                    imagesToReturn.Add(_mapper.Map<PhotoDto>(image));
+
+                    savepoint = $"BeforeInsertItemImage{i}";
+                    await transaction.CreateSavepointAsync(savepoint);
+                }
+
+                await transaction.CommitAsync();
+
+                itemToReturn = new ItemListingDto
+                {
+                    Id = itemListing.Id,
+                    Title = itemListing.Title,
+                    Price = itemListing.Price,
+                    Description = itemListing.Description,
+                    Condition = itemListing.Condition,
+                    Archived = itemListing.Archived,
+                    CategoryName = itemListing.CategoryName,
+                    Images = imagesToReturn,
+                };
+            }
+            catch (Exception)
+            {
+                transaction.RollbackToSavepoint(savepoint);
+            }
+
+            return itemToReturn;
         }
     }
 }

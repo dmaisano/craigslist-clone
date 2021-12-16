@@ -1,3 +1,5 @@
+using System.Security.Claims;
+using API.Data;
 using API.DTOs;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -10,17 +12,26 @@ namespace API.Controllers
     public class ItemListingController : BaseApiController
     {
         private readonly IMapper _mapper;
-        public ItemListingController(IMapper mapper)
+        private readonly IUnitOfWork _unitOfWork;
+        public ItemListingController(IUnitOfWork unitOfWork, IMapper mapper)
         {
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
         [HttpPost("add-new-item")]
-        public async Task<ActionResult<ItemListingDto>> AddItemListing(AddItemListingDto newItem)
+        public async Task<ActionResult<ItemListingDto>> AddItemListing([FromForm] AddItemListingDto dto)
         {
-            var itemListing = _mapper.Map<ItemListing>(newItem);
-
-            return new ItemListingDto { };
+            try
+            {
+                var user = await _unitOfWork.GetUserByIdAsync(User.GetUserId());
+                var result = await _unitOfWork.ItemListingRepository.AddNewItem(dto, user.Id);
+                return result;
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }

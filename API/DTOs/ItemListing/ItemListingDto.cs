@@ -18,8 +18,11 @@ namespace API.DTOs
 
         public string CategoryName { get; set; }
 
+        [JsonIgnore]
         public int OwnderId { get; set; }
 
-        public ICollection<ItemImage> Images { get; set; }
+        public ICollection<PhotoDto> Images { get; set; }
+
+        public Dictionary<string, string> Errors { get; set; }
     }
 }

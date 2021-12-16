@@ -27,9 +27,11 @@ namespace API.Entities
         public ICollection<ItemImage> Images { get; set; }
 
 
+        [ForeignKey("CategoryName")]
         public string CategoryName { get; set; }
         public ItemCategory Category { get; set; }
 
+        [ForeignKey("Owner")]
         public int OwnerId { get; set; }
         public AppUser Owner { get; set; }
     }

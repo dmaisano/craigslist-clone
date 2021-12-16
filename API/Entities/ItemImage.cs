@@ -16,9 +16,11 @@ namespace API.Entities
 
         public bool IsMain { get; set; }
 
+        [ForeignKey("ItemListing")]
         public int ItemListingId { get; set; }
         public ItemListing ItemListing { get; set; }
 
+        [ForeignKey("Owner")]
         public int OwnerId { get; set; }
         public AppUser Owner { get; set; }
     }
