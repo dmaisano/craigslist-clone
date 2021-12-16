@@ -20,7 +20,7 @@ type FormValues = {
   password: string;
 };
 
-const Login: NextPage = ({}) => {
+const LoginPage: NextPage = ({}) => {
   const [foo, setFoo] = useState("foo");
   const {
     register,
@@ -45,11 +45,11 @@ const Login: NextPage = ({}) => {
 
       <Layout>
         <Container mt="8" maxW="480px">
-          <RegisterLoginForm action="register" />
+          <RegisterLoginForm action="login" />
         </Container>
       </Layout>
     </>
   );
 };
 
-export default Login;
+export default LoginPage;

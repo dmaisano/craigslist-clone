@@ -11,6 +11,7 @@ namespace API.Data.Repositories
         Task<IEnumerable<MemberDto>> GetMembersAsync();
         Task<AppUser> GetUserByIdAsync(int id);
         Task<AppUser> GetUserByUsernameAsync(string username);
+        Task<AppUser> GetUserByUsernameOrEmail(string usernameOrEmail);
         Task<bool> UserExistsAsync(string username = null);
     }
 
@@ -31,6 +32,15 @@ namespace API.Data.Repositories
             return user;
         }
 
+        // ? I could overload this method and provide optional params for narrowing search results and reduce overfetching
+        public async Task<IEnumerable<MemberDto>> GetMembersAsync()
+        {
+            return await _context.Users
+                .OrderByDescending(x => x.Id)
+                .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+        }
+
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
             return await _context.Users.FindAsync(id);
@@ -43,13 +53,10 @@ namespace API.Data.Repositories
                 .SingleOrDefaultAsync(x => x.UserName == username);
         }
 
-        // ? I could overload this method and provide optional params for narrowing search results and reduce overfetching
-        public async Task<IEnumerable<MemberDto>> GetMembersAsync()
+        public async Task<AppUser> GetUserByUsernameOrEmail(string usernameOrEmail)
         {
             return await _context.Users
-                .OrderByDescending(x => x.Id)
-                .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+                .SingleOrDefaultAsync(x => x.UserName == usernameOrEmail || x.Email == usernameOrEmail);
         }
 
         public async Task<bool> UserExistsAsync(string username = null)

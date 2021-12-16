@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Migrations
 {
-    public partial class ModifiedItemCategoryColToInt : Migration
+    public partial class AddedEmailColOnUsers : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,7 @@ namespace API.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", nullable: false, collation: "NOCASE")
                 },
                 constraints: table =>
                 {
@@ -27,6 +27,7 @@ namespace API.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     UserName = table.Column<string>(type: "TEXT", nullable: false),
+                    Email = table.Column<string>(type: "TEXT", nullable: false),
                     PasswordHash = table.Column<byte[]>(type: "BLOB", nullable: false),
                     PasswordSalt = table.Column<byte[]>(type: "BLOB", nullable: false),
                     Role = table.Column<string>(type: "TEXT", nullable: false, defaultValue: "Member"),
@@ -50,7 +51,7 @@ namespace API.Migrations
                     CreatedOn = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "datetime('now')"),
                     Condition = table.Column<int>(type: "INTEGER", nullable: false),
                     Archived = table.Column<bool>(type: "INTEGER", nullable: false, defaultValue: false),
-                    CategoryName = table.Column<string>(type: "TEXT", nullable: true),
+                    CategoryName = table.Column<string>(type: "TEXT", nullable: true, collation: "NOCASE"),
                     OwnerId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -111,23 +112,23 @@ namespace API.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "CreatedOn", "PasswordHash", "PasswordSalt", "Role", "UpdatedOn", "UserName" },
-                values: new object[] { 1, new DateTime(2021, 12, 15, 19, 13, 51, 30, DateTimeKind.Local).AddTicks(2579), new byte[] { 245, 133, 212, 199, 187, 108, 38, 143, 189, 32, 180, 52, 219, 80, 7, 73, 175, 71, 205, 182, 61, 225, 43, 169, 5, 159, 78, 239, 127, 100, 206, 223, 241, 72, 53, 241, 83, 32, 115, 53, 23, 201, 49, 185, 252, 119, 4, 31, 189, 142, 142, 114, 130, 82, 233, 207, 0, 202, 170, 230, 5, 210, 114, 47 }, new byte[] { 66, 227, 166, 49, 50, 118, 58, 229, 56, 43, 242, 11, 226, 68, 160, 104, 231, 128, 130, 11, 83, 148, 136, 219, 136, 131, 203, 110, 4, 184, 30, 61, 185, 170, 40, 246, 32, 98, 36, 234, 74, 213, 166, 124, 45, 165, 42, 234, 28, 191, 125, 10, 97, 21, 126, 201, 41, 206, 102, 215, 126, 30, 42, 165, 28, 5, 214, 188, 188, 154, 144, 85, 45, 248, 175, 87, 66, 27, 59, 80, 110, 200, 2, 200, 192, 36, 227, 31, 238, 228, 243, 43, 115, 99, 179, 246, 232, 38, 124, 162, 132, 200, 128, 41, 216, 106, 184, 105, 86, 4, 153, 210, 134, 171, 179, 249, 232, 234, 200, 130, 89, 215, 189, 4, 41, 129, 22, 229 }, "Admin", new DateTime(2021, 12, 15, 19, 13, 51, 30, DateTimeKind.Local).AddTicks(2581), "admin" });
+                columns: new[] { "Id", "CreatedOn", "Email", "PasswordHash", "PasswordSalt", "Role", "UpdatedOn", "UserName" },
+                values: new object[] { 1, new DateTime(2021, 12, 16, 18, 8, 3, 879, DateTimeKind.Local).AddTicks(3575), "admin@domain.net", new byte[] { 115, 19, 131, 155, 13, 221, 232, 38, 212, 195, 231, 45, 159, 181, 149, 222, 91, 195, 208, 98, 156, 26, 148, 102, 80, 198, 71, 175, 198, 167, 59, 15, 234, 220, 140, 178, 222, 194, 232, 199, 193, 148, 248, 60, 172, 198, 158, 164, 75, 227, 231, 121, 30, 165, 57, 141, 232, 138, 115, 172, 247, 252, 66, 76 }, new byte[] { 118, 151, 94, 52, 180, 33, 149, 26, 100, 123, 2, 86, 143, 164, 127, 251, 54, 235, 19, 106, 151, 86, 116, 35, 85, 232, 53, 21, 206, 220, 6, 117, 174, 236, 105, 167, 31, 251, 40, 178, 216, 19, 161, 42, 113, 215, 217, 112, 33, 126, 192, 174, 175, 102, 44, 240, 52, 0, 244, 114, 192, 177, 147, 28, 70, 96, 113, 179, 171, 144, 233, 108, 244, 57, 76, 94, 166, 59, 79, 14, 111, 88, 205, 125, 76, 62, 20, 204, 195, 212, 250, 92, 209, 216, 135, 187, 59, 155, 60, 254, 92, 224, 6, 170, 148, 194, 152, 164, 119, 29, 89, 252, 174, 27, 216, 109, 233, 196, 139, 210, 51, 224, 222, 144, 98, 250, 88, 78 }, "Admin", new DateTime(2021, 12, 16, 18, 8, 3, 879, DateTimeKind.Local).AddTicks(3577), "admin" });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "CreatedOn", "PasswordHash", "PasswordSalt", "UpdatedOn", "UserName" },
-                values: new object[] { 2, new DateTime(2021, 12, 15, 19, 13, 51, 30, DateTimeKind.Local).AddTicks(2615), new byte[] { 37, 144, 251, 171, 150, 188, 155, 154, 222, 40, 250, 122, 189, 182, 155, 28, 115, 52, 19, 144, 248, 80, 152, 9, 203, 100, 53, 102, 132, 87, 125, 199, 211, 39, 207, 169, 193, 25, 17, 30, 80, 156, 16, 30, 15, 41, 99, 188, 20, 85, 34, 76, 119, 31, 87, 166, 154, 7, 94, 189, 43, 225, 228, 189 }, new byte[] { 37, 15, 139, 28, 196, 83, 191, 217, 88, 13, 71, 14, 154, 29, 26, 31, 181, 236, 55, 159, 248, 202, 173, 197, 158, 34, 164, 40, 254, 241, 222, 187, 246, 64, 46, 103, 160, 99, 219, 99, 117, 236, 130, 194, 247, 43, 13, 198, 192, 248, 158, 114, 86, 211, 46, 75, 185, 249, 244, 9, 19, 128, 21, 214, 147, 222, 10, 22, 142, 200, 178, 111, 31, 238, 165, 228, 32, 12, 54, 166, 172, 124, 237, 75, 97, 17, 161, 116, 149, 28, 89, 16, 86, 160, 15, 128, 41, 226, 81, 220, 183, 130, 107, 67, 68, 91, 103, 168, 151, 180, 4, 100, 33, 69, 229, 209, 96, 129, 195, 109, 164, 196, 26, 174, 14, 32, 108, 193 }, new DateTime(2021, 12, 15, 19, 13, 51, 30, DateTimeKind.Local).AddTicks(2617), "member" });
+                columns: new[] { "Id", "CreatedOn", "Email", "PasswordHash", "PasswordSalt", "UpdatedOn", "UserName" },
+                values: new object[] { 2, new DateTime(2021, 12, 16, 18, 8, 3, 879, DateTimeKind.Local).AddTicks(3610), "member@domain.net", new byte[] { 76, 239, 71, 202, 199, 5, 201, 168, 244, 106, 204, 47, 169, 116, 193, 207, 172, 92, 152, 44, 145, 210, 101, 65, 244, 71, 57, 20, 97, 112, 22, 135, 229, 103, 205, 160, 38, 16, 175, 68, 175, 188, 208, 6, 251, 67, 80, 98, 165, 120, 224, 208, 141, 100, 104, 184, 146, 123, 252, 74, 146, 8, 71, 24 }, new byte[] { 71, 224, 40, 52, 148, 178, 245, 111, 38, 185, 236, 75, 104, 55, 82, 102, 82, 110, 27, 177, 42, 92, 73, 101, 228, 129, 29, 252, 45, 160, 119, 71, 102, 106, 9, 103, 33, 106, 68, 253, 25, 235, 158, 127, 95, 64, 109, 235, 4, 255, 57, 44, 222, 54, 255, 54, 138, 31, 51, 11, 163, 251, 251, 78, 214, 84, 71, 45, 159, 159, 125, 224, 132, 89, 111, 151, 143, 207, 59, 198, 32, 53, 226, 49, 91, 237, 19, 217, 31, 78, 167, 142, 184, 205, 110, 87, 169, 217, 163, 12, 224, 242, 146, 18, 29, 140, 251, 104, 153, 129, 38, 187, 124, 101, 220, 178, 45, 182, 120, 42, 11, 29, 189, 105, 237, 193, 73, 226 }, new DateTime(2021, 12, 16, 18, 8, 3, 879, DateTimeKind.Local).AddTicks(3611), "member" });
 
             migrationBuilder.InsertData(
                 table: "ItemListings",
                 columns: new[] { "Id", "CategoryName", "Condition", "CreatedOn", "Description", "OwnerId", "Price", "Title" },
-                values: new object[] { 1, "Furniture", 2, new DateTime(2021, 12, 15, 19, 13, 51, 30, DateTimeKind.Local).AddTicks(3793), "Round folding dining table from Bob's Furniture Store.\nGreat for smaller dining areas/apartments. Smoke-free home.\n\nAsking price - $50.", 2, 50.0, "Round Folding Dining Table" });
+                values: new object[] { 1, "Furniture", 2, new DateTime(2021, 12, 16, 18, 8, 3, 879, DateTimeKind.Local).AddTicks(4920), "Round folding dining table from Bob's Furniture Store.\nGreat for smaller dining areas/apartments. Smoke-free home.\n\nAsking price - $50.", 2, 50.0, "Round Folding Dining Table" });
 
             migrationBuilder.InsertData(
                 table: "ItemListings",
                 columns: new[] { "Id", "CategoryName", "Condition", "CreatedOn", "Description", "OwnerId", "Price", "Title" },
-                values: new object[] { 2, "Electronics", 0, new DateTime(2021, 12, 15, 19, 13, 51, 30, DateTimeKind.Local).AddTicks(3806), "Absolutely brand new in the box (unopened box) 55 inch TCL 4K UHD Smart Roku TV.\n.Condition: Brand New In the (unopened). Same condition as you get from a store. Price: $330 Cash and Pick up only.", 2, 330.0, "Brand New 55\" inch TCL - 4K UHD Smart Roku TV" });
+                values: new object[] { 2, "Electronics", 0, new DateTime(2021, 12, 16, 18, 8, 3, 879, DateTimeKind.Local).AddTicks(4933), "Absolutely brand new in the box (unopened box) 55 inch TCL 4K UHD Smart Roku TV.\n.Condition: Brand New In the (unopened). Same condition as you get from a store. Price: $330 Cash and Pick up only.", 2, 330.0, "Brand New 55\" inch TCL - 4K UHD Smart Roku TV" });
 
             migrationBuilder.InsertData(
                 table: "ItemImages",

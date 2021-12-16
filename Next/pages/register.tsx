@@ -5,7 +5,7 @@ import React from "react";
 import { Layout } from "../components";
 import RegisterLoginForm from "../components/RegisterLoginForm";
 
-const Register: NextPage = ({}) => {
+const RegisterPage: NextPage = ({}) => {
   return (
     <>
       <Head>
@@ -23,4 +23,4 @@ const Register: NextPage = ({}) => {
   );
 };
 
-export default Register;
+export default RegisterPage;

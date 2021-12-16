@@ -8,9 +8,14 @@ namespace API.Utilities
         public AutoMapperProfiles()
         {
             CreateMap<AppUser, MemberDto>();
-            CreateMap<AddItemListingDto, ItemListing>();
-            // CreateMap<ItemListing, ItemListingDto>();
+
             CreateMap<ItemImage, PhotoDto>();
+
+            CreateMap<AddItemListingDto, ItemListing>();
+
+            CreateMap<ItemListing, ItemListingDto>();
+
+            CreateMap<ItemCategory, ItemCategoryDto>();
         }
     }
 }

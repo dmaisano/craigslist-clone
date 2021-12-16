@@ -18,11 +18,40 @@ namespace API.DTOs
 
         public string CategoryName { get; set; }
 
+        public string OwnerEmail { get; set; }
+
         [JsonIgnore]
         public int OwnderId { get; set; }
 
         public ICollection<PhotoDto> Images { get; set; }
 
         public Dictionary<string, string> Errors { get; set; }
+
+        public ItemListingDto() { }
+
+        public ItemListingDto(ItemListing itemListing)
+        {
+            Id = itemListing.Id;
+            Title = itemListing.Title;
+            Price = itemListing.Price;
+            Description = itemListing.Description;
+            Condition = itemListing.Condition;
+            Archived = itemListing.Archived;
+            CategoryName = itemListing.CategoryName;
+            OwnerEmail = itemListing.OwnerEmail;
+            Images = itemListing.Images.Select(x => new PhotoDto(x)).ToList();
+        }
+
+        public ItemListingDto(ItemListing itemListing, ICollection<PhotoDto> images = null)
+        {
+            Id = itemListing.Id;
+            Title = itemListing.Title;
+            Price = itemListing.Price;
+            Description = itemListing.Description;
+            Condition = itemListing.Condition;
+            Archived = itemListing.Archived;
+            CategoryName = itemListing.CategoryName;
+            Images = images;
+        }
     }
 }

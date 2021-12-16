@@ -1,12 +1,15 @@
 using API.DTOs;
 using API.Services;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using AutoMapper.QueryableExtensions;
 
 namespace API.Data.Repositories
 {
     public interface IItemListingRepository
     {
-
+        Task<IEnumerable<ItemListingDto>> GetAllItemsAsync(string category = null);
+        Task<ItemListingDto> AddNewItemAsync(AddItemListingDto dto, int userId);
     }
 
     public class ItemListingRepository : IItemListingRepository
@@ -22,7 +25,33 @@ namespace API.Data.Repositories
             _photoService = photoService;
         }
 
-        public async Task<ItemListingDto> AddNewItem(AddItemListingDto dto, int userId)
+        public async Task<IEnumerable<ItemListingDto>> GetAllItemsAsync(string category = null)
+        {
+            if (category == null) return new List<ItemListingDto>();
+
+            var items = _context.ItemListings
+                .Include(x => x.Images)
+                .Include(x => x.Owner)
+                .Where(x => x.CategoryName == category)
+                .AsQueryable();
+
+            items = items.Select(x => new ItemListing
+            {
+                Id = x.Id,
+                Title = x.Title,
+                Price = x.Price,
+                Description = x.Description,
+                Condition = x.Condition,
+                Archived = x.Archived,
+                CategoryName = x.CategoryName,
+                OwnerEmail = x.Owner.Email,
+                Images = new List<ItemImage> { x.Images.Where(x => x.IsMain).SingleOrDefault() },
+            });
+
+            return await items.Select(x => new ItemListingDto(x)).ToListAsync();
+        }
+
+        public async Task<ItemListingDto> AddNewItemAsync(AddItemListingDto dto, int userId)
         {
             var itemToReturn = new ItemListingDto();
             var imagesToReturn = new List<PhotoDto>();
@@ -77,17 +106,7 @@ namespace API.Data.Repositories
 
                 await transaction.CommitAsync();
 
-                itemToReturn = new ItemListingDto
-                {
-                    Id = itemListing.Id,
-                    Title = itemListing.Title,
-                    Price = itemListing.Price,
-                    Description = itemListing.Description,
-                    Condition = itemListing.Condition,
-                    Archived = itemListing.Archived,
-                    CategoryName = itemListing.CategoryName,
-                    Images = imagesToReturn,
-                };
+                itemToReturn = new ItemListingDto(itemListing, imagesToReturn);
             }
             catch (Exception)
             {

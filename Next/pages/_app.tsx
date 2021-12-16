@@ -1,13 +1,10 @@
-import type { AppProps } from "next/app";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { mode } from "@chakra-ui/theme-tools";
-import { createContext, useContext } from "react";
-import { IUser } from "../model/user.model";
-import {
-  usePersistedUser,
-  PersistedUserResponse,
-} from "../utils/usePersistedUser";
+import type { AppProps } from "next/app";
+import { createContext, Dispatch, SetStateAction } from "react";
 import { DEFAULT_USER } from "../constants";
+import { IUser } from "../model/user.model";
+import usePersistedState from "../utils/usePersistedState";
 
 const theme = extendTheme({
   styles: {
@@ -26,20 +23,19 @@ const theme = extendTheme({
   },
 });
 
-export const AppUserContext = createContext<PersistedUserResponse>([
-  DEFAULT_USER,
-  () => {},
-]);
+export const AppUserContext = createContext<
+  [IUser, Dispatch<SetStateAction<IUser>>]
+>([DEFAULT_USER, () => {}]);
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [user, setUser] = usePersistedUser(DEFAULT_USER);
+  const [user, setUser] = usePersistedState(`user`, DEFAULT_USER);
 
   return (
-    <ChakraProvider theme={theme}>
-      <AppUserContext.Provider value={[user, setUser]}>
+    <AppUserContext.Provider value={[user, setUser]}>
+      <ChakraProvider theme={theme}>
         <Component {...pageProps} />
-      </AppUserContext.Provider>
-    </ChakraProvider>
+      </ChakraProvider>
+    </AppUserContext.Provider>
   );
 }
 

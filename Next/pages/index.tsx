@@ -1,8 +1,40 @@
-import { NextPage } from "next";
+import { Box, Container, Heading, Text } from "@chakra-ui/react";
+import axios from "axios";
+import {
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  NextPage,
+} from "next";
 import Head from "next/head";
-import { Layout } from "../components";
+import { Layout, NextChakraLink } from "../components";
+import { API_URL } from "../constants";
+import { IItemCategory } from "../model/itemCategory.model";
+import { IItemListing } from "../model/items.model";
 
-const HomePage: NextPage = () => {
+export const getServerSideProps: GetServerSideProps<{
+  categories: IItemCategory[];
+}> = async () => {
+  let categories: IItemCategory[] = [];
+
+  try {
+    const res = await axios.get<IItemCategory[]>(`${API_URL}/categories`);
+
+    if (res.data && res.data.length > 0) {
+      categories = res.data;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  return {
+    props: {
+      categories,
+    },
+  };
+};
+
+const HomePage: NextPage<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ categories }) => {
   return (
     <>
       <Head>
@@ -11,7 +43,36 @@ const HomePage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout></Layout>
+      <Layout>
+        <Container mt="16" maxW="container.sm" textAlign="center">
+          <Heading as="h2" mb="8">
+            For Sale
+          </Heading>
+
+          {(!categories || categories.length < 1) && (
+            <Text fontSize="2xl" fontWeight="medium">
+              No Categories Found ⚠
+            </Text>
+          )}
+
+          {categories &&
+            categories.length > 0 &&
+            categories.map(({ name: categoryName }) => {
+              return (
+                <Box key={categoryName} mt="4">
+                  <NextChakraLink
+                    href={`/for-sale/${categoryName.toLowerCase()}`}
+                    color="blue.500"
+                    fontSize="2xl"
+                    fontWeight="medium"
+                  >
+                    {categoryName}
+                  </NextChakraLink>
+                </Box>
+              );
+            })}
+        </Container>
+      </Layout>
     </>
   );
 };
