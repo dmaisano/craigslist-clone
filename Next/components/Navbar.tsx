@@ -40,6 +40,12 @@ const Navbar: React.FC = ({}) => {
         <Flex alignItems="center" fontWeight="semibold">
           {user.username && user.token ? (
             <>
+              <NextChakraLink mr="4" href={`/manage-items`}>
+                <Button>Manage Items</Button>
+              </NextChakraLink>
+              <NextChakraLink mr="4" href={`/sell-item`}>
+                <Button>Post Item For Sale</Button>
+              </NextChakraLink>
               <Text color="gray.200" float="left" mr="4">
                 logged in as {`"${user.username}"`}
               </Text>
