@@ -1,6 +1,5 @@
 import { isBrowser } from "@chakra-ui/utils";
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
-import { IsBrowser } from "../constants";
 
 type Response<T> = [T, Dispatch<SetStateAction<T>>];
 
@@ -18,7 +17,7 @@ function usePersistedState<T>(key: string, initialState: T): Response<T> {
   });
 
   useEffect(() => {
-    if (IsBrowser) {
+    if (isBrowser) {
       localStorage.setItem(key, JSON.stringify(state));
     }
   }, [key, state]);

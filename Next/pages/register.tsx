@@ -15,7 +15,7 @@ const Register: NextPage = ({}) => {
       </Head>
 
       <Layout>
-        <Container mt="8" maxW="container.sm">
+        <Container mt="8" maxW="480px">
           <RegisterLoginForm action="register" />
         </Container>
       </Layout>
