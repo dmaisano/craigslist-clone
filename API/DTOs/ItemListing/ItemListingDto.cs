@@ -18,6 +18,8 @@ namespace API.DTOs
 
         public string CategoryName { get; set; }
 
+        public string OwnerEmail { get; set; }
+
         [JsonIgnore]
         public int OwnderId { get; set; }
 
@@ -36,6 +38,7 @@ namespace API.DTOs
             Condition = itemListing.Condition;
             Archived = itemListing.Archived;
             CategoryName = itemListing.CategoryName;
+            OwnerEmail = itemListing.OwnerEmail;
             Images = itemListing.Images.Select(x => new PhotoDto(x)).ToList();
         }
 

@@ -26,6 +26,9 @@ namespace API.Entities
 
         public ICollection<ItemImage> Images { get; set; }
 
+        [NotMapped]
+        public string OwnerEmail { get; set; }
+
 
         [ForeignKey("CategoryName")]
         public string CategoryName { get; set; }

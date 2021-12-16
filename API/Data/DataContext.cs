@@ -45,12 +45,14 @@ namespace API.Data
                 new MemberDto {
                     Id = 1,
                     Username = "admin",
+                    Email = "admin@domain.net",
                     Password = "admin",
                     Role = UserRole.Admin,
                 },
                 new MemberDto {
                     Id = 2,
                     Username = "member",
+                    Email = "member@domain.net",
                     Password = "member",
                 }
             };
@@ -63,6 +65,7 @@ namespace API.Data
                 {
                     Id = m.Id,
                     UserName = m.Username,
+                    Email = m.Email,
                     PasswordHash = secureCreds.PasswordHash,
                     PasswordSalt = secureCreds.PasswordSalt,
                     Role = m.Role,

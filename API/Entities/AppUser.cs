@@ -13,6 +13,10 @@ namespace API.Entities
         public string UserName { get; set; }
 
         [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
         public byte[] PasswordHash { get; set; }
 
         [Required]

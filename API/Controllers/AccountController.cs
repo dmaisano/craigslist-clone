@@ -23,6 +23,7 @@ namespace API.Controllers
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
             var username = registerDto.Username.ToLower();
+            var email = registerDto.Email.ToLower();
 
             if (registerDto.Password != registerDto.ConfirmPassword) return BadRequest("Passwords do not match");
 
@@ -36,6 +37,7 @@ namespace API.Controllers
                 user = new AppUser
                 {
                     UserName = username,
+                    Email = email,
                     PasswordHash = secureCreds.PasswordHash,
                     PasswordSalt = secureCreds.PasswordSalt,
                     Role = UserRole.Member,
@@ -60,7 +62,8 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
-            var user = await _userRepo.GetUserByUsernameAsync(loginDto.Username);
+            var usernameOrEmail = loginDto.UsernameOrEmail.ToLower();
+            var user = await _unitOfWork.UserRepository.GetUserByUsernameOrEmail(usernameOrEmail);
 
             if (user == null) return Unauthorized(); // ? I'm being vague here to not give any details to potential phishers
 

@@ -31,7 +31,7 @@ namespace API.Data.Repositories
 
             var items = _context.ItemListings
                 .Include(x => x.Images)
-                // .Where(x => EF.Functions.Like(x.CategoryName, $"%{category}%"))
+                .Include(x => x.Owner)
                 .Where(x => x.CategoryName == category)
                 .AsQueryable();
 
@@ -44,7 +44,8 @@ namespace API.Data.Repositories
                 Condition = x.Condition,
                 Archived = x.Archived,
                 CategoryName = x.CategoryName,
-                Images = new List<ItemImage> { x.Images.Where(x => x.IsMain).FirstOrDefault() },
+                OwnerEmail = x.Owner.Email,
+                Images = new List<ItemImage> { x.Images.Where(x => x.IsMain).SingleOrDefault() },
             });
 
             return await items.Select(x => new ItemListingDto(x)).ToListAsync();

@@ -31,6 +31,7 @@ namespace API.Controllers
         {
             try
             {
+                var claim = User;
                 var user = await _unitOfWork.GetUserByIdAsync(User.GetUserId());
                 var result = await _unitOfWork.ItemListingRepository.AddNewItemAsync(dto, user.Id);
                 return result;
