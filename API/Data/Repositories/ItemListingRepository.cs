@@ -8,7 +8,7 @@ namespace API.Data.Repositories
 {
     public interface IItemListingRepository
     {
-        Task<IEnumerable<ItemListingDto>> GetAllItemsAsync();
+        Task<IEnumerable<ItemListingDto>> GetAllItemsAsync(bool isHome = false);
         Task<ItemListingDto> AddNewItemAsync(AddItemListingDto dto, int userId);
     }
 
@@ -25,12 +25,28 @@ namespace API.Data.Repositories
             _photoService = photoService;
         }
 
-        public async Task<IEnumerable<ItemListingDto>> GetAllItemsAsync()
+        public async Task<IEnumerable<ItemListingDto>> GetAllItemsAsync(bool isHome = false)
         {
-            return await _context.ItemListings
+            var items = _context.ItemListings
                 .Include(x => x.Images)
-                .ProjectTo<ItemListingDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+                .AsQueryable();
+
+
+            if (isHome)
+            {
+                items = items.Select(x => new ItemListing
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Price = x.Price,
+                    Description = x.Description,
+                    Condition = x.Condition,
+                    Archived = x.Archived,
+                    CategoryName = x.CategoryName,
+                    Images = new List<ItemImage> { x.Images.Where(x => x.IsMain).FirstOrDefault() },
+                });
+            }
+            return await items.Select(x => new ItemListingDto(x)).ToListAsync();
         }
 
         public async Task<ItemListingDto> AddNewItemAsync(AddItemListingDto dto, int userId)

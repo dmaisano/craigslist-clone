@@ -21,10 +21,10 @@ namespace API.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ItemListingDto>>> GetAllItems()
+        public async Task<ActionResult<IEnumerable<ItemListingDto>>> GetAllItems([FromQuery] bool isHome = false)
         {
             // For the sake of time I'm not doing any pagination
-            var items = await _unitOfWork.ItemListingRepository.GetAllItemsAsync();
+            var items = await _unitOfWork.ItemListingRepository.GetAllItemsAsync(isHome);
 
             return Ok(items);
         }

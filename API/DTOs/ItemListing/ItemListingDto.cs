@@ -27,6 +27,18 @@ namespace API.DTOs
 
         public ItemListingDto() { }
 
+        public ItemListingDto(ItemListing itemListing)
+        {
+            Id = itemListing.Id;
+            Title = itemListing.Title;
+            Price = itemListing.Price;
+            Description = itemListing.Description;
+            Condition = itemListing.Condition;
+            Archived = itemListing.Archived;
+            CategoryName = itemListing.CategoryName;
+            Images = itemListing.Images.Select(x => new PhotoDto(x)).ToList();
+        }
+
         public ItemListingDto(ItemListing itemListing, ICollection<PhotoDto> images = null)
         {
             Id = itemListing.Id;
