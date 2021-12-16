@@ -24,5 +24,19 @@ namespace API.DTOs
         public ICollection<PhotoDto> Images { get; set; }
 
         public Dictionary<string, string> Errors { get; set; }
+
+        public ItemListingDto() { }
+
+        public ItemListingDto(ItemListing itemListing, ICollection<PhotoDto> images = null)
+        {
+            Id = itemListing.Id;
+            Title = itemListing.Title;
+            Price = itemListing.Price;
+            Description = itemListing.Description;
+            Condition = itemListing.Condition;
+            Archived = itemListing.Archived;
+            CategoryName = itemListing.CategoryName;
+            Images = images;
+        }
     }
 }

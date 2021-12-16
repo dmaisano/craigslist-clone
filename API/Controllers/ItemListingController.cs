@@ -19,13 +19,23 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ItemListingDto>>> GetAllItems()
+        {
+            // For the sake of time I'm not doing any pagination
+            var items = await _unitOfWork.ItemListingRepository.GetAllItemsAsync();
+
+            return Ok(items);
+        }
+
         [HttpPost("add-new-item")]
         public async Task<ActionResult<ItemListingDto>> AddItemListing([FromForm] AddItemListingDto dto)
         {
             try
             {
                 var user = await _unitOfWork.GetUserByIdAsync(User.GetUserId());
-                var result = await _unitOfWork.ItemListingRepository.AddNewItem(dto, user.Id);
+                var result = await _unitOfWork.ItemListingRepository.AddNewItemAsync(dto, user.Id);
                 return result;
             }
             catch (Exception)

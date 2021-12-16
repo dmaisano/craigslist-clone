@@ -1,12 +1,15 @@
 using API.DTOs;
 using API.Services;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using AutoMapper.QueryableExtensions;
 
 namespace API.Data.Repositories
 {
     public interface IItemListingRepository
     {
-
+        Task<IEnumerable<ItemListingDto>> GetAllItemsAsync();
+        Task<ItemListingDto> AddNewItemAsync(AddItemListingDto dto, int userId);
     }
 
     public class ItemListingRepository : IItemListingRepository
@@ -22,7 +25,15 @@ namespace API.Data.Repositories
             _photoService = photoService;
         }
 
-        public async Task<ItemListingDto> AddNewItem(AddItemListingDto dto, int userId)
+        public async Task<IEnumerable<ItemListingDto>> GetAllItemsAsync()
+        {
+            return await _context.ItemListings
+                .Include(x => x.Images)
+                .ProjectTo<ItemListingDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+        }
+
+        public async Task<ItemListingDto> AddNewItemAsync(AddItemListingDto dto, int userId)
         {
             var itemToReturn = new ItemListingDto();
             var imagesToReturn = new List<PhotoDto>();
@@ -77,17 +88,7 @@ namespace API.Data.Repositories
 
                 await transaction.CommitAsync();
 
-                itemToReturn = new ItemListingDto
-                {
-                    Id = itemListing.Id,
-                    Title = itemListing.Title,
-                    Price = itemListing.Price,
-                    Description = itemListing.Description,
-                    Condition = itemListing.Condition,
-                    Archived = itemListing.Archived,
-                    CategoryName = itemListing.CategoryName,
-                    Images = imagesToReturn,
-                };
+                itemToReturn = new ItemListingDto(itemListing, imagesToReturn);
             }
             catch (Exception)
             {
