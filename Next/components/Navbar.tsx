@@ -52,12 +52,12 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
             </>
           ) : (
             <>
-              <Button as={NextChakraLink} mr="4" href={`/login`}>
-                Login
-              </Button>
-              <Button as={NextChakraLink} href={`/register`}>
-                Register
-              </Button>
+              <NextChakraLink mr="4" href={`/login`}>
+                <Button>Login</Button>
+              </NextChakraLink>
+              <NextChakraLink href={`/register`}>
+                <Button>Register</Button>
+              </NextChakraLink>
             </>
           )}
         </Flex>
