@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Migrations
 {
-    public partial class ModifiedItemCategoryColToInt : Migration
+    public partial class AddNoCaseCollationOnItemCategory : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,7 @@ namespace API.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", nullable: false, collation: "NOCASE")
                 },
                 constraints: table =>
                 {
@@ -50,7 +50,7 @@ namespace API.Migrations
                     CreatedOn = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "datetime('now')"),
                     Condition = table.Column<int>(type: "INTEGER", nullable: false),
                     Archived = table.Column<bool>(type: "INTEGER", nullable: false, defaultValue: false),
-                    CategoryName = table.Column<string>(type: "TEXT", nullable: true),
+                    CategoryName = table.Column<string>(type: "TEXT", nullable: true, collation: "NOCASE"),
                     OwnerId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -112,22 +112,22 @@ namespace API.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CreatedOn", "PasswordHash", "PasswordSalt", "Role", "UpdatedOn", "UserName" },
-                values: new object[] { 1, new DateTime(2021, 12, 15, 19, 13, 51, 30, DateTimeKind.Local).AddTicks(2579), new byte[] { 245, 133, 212, 199, 187, 108, 38, 143, 189, 32, 180, 52, 219, 80, 7, 73, 175, 71, 205, 182, 61, 225, 43, 169, 5, 159, 78, 239, 127, 100, 206, 223, 241, 72, 53, 241, 83, 32, 115, 53, 23, 201, 49, 185, 252, 119, 4, 31, 189, 142, 142, 114, 130, 82, 233, 207, 0, 202, 170, 230, 5, 210, 114, 47 }, new byte[] { 66, 227, 166, 49, 50, 118, 58, 229, 56, 43, 242, 11, 226, 68, 160, 104, 231, 128, 130, 11, 83, 148, 136, 219, 136, 131, 203, 110, 4, 184, 30, 61, 185, 170, 40, 246, 32, 98, 36, 234, 74, 213, 166, 124, 45, 165, 42, 234, 28, 191, 125, 10, 97, 21, 126, 201, 41, 206, 102, 215, 126, 30, 42, 165, 28, 5, 214, 188, 188, 154, 144, 85, 45, 248, 175, 87, 66, 27, 59, 80, 110, 200, 2, 200, 192, 36, 227, 31, 238, 228, 243, 43, 115, 99, 179, 246, 232, 38, 124, 162, 132, 200, 128, 41, 216, 106, 184, 105, 86, 4, 153, 210, 134, 171, 179, 249, 232, 234, 200, 130, 89, 215, 189, 4, 41, 129, 22, 229 }, "Admin", new DateTime(2021, 12, 15, 19, 13, 51, 30, DateTimeKind.Local).AddTicks(2581), "admin" });
+                values: new object[] { 1, new DateTime(2021, 12, 16, 17, 0, 0, 406, DateTimeKind.Local).AddTicks(5525), new byte[] { 196, 32, 71, 122, 246, 143, 232, 113, 64, 37, 240, 183, 70, 133, 29, 238, 46, 97, 71, 235, 77, 137, 48, 86, 179, 170, 82, 114, 146, 61, 130, 227, 172, 90, 76, 28, 57, 190, 190, 62, 92, 251, 177, 39, 234, 191, 7, 96, 150, 38, 194, 3, 110, 143, 148, 90, 56, 174, 104, 68, 141, 228, 223, 153 }, new byte[] { 231, 227, 4, 21, 219, 198, 202, 38, 67, 26, 92, 236, 88, 252, 160, 144, 53, 39, 216, 80, 44, 197, 232, 170, 119, 30, 69, 189, 30, 25, 151, 147, 72, 189, 241, 72, 178, 228, 95, 65, 194, 171, 234, 239, 133, 148, 24, 59, 126, 199, 151, 237, 73, 241, 226, 32, 200, 101, 47, 88, 106, 64, 13, 217, 221, 153, 81, 245, 165, 129, 165, 55, 180, 194, 244, 189, 159, 162, 236, 206, 93, 116, 50, 210, 202, 186, 38, 242, 20, 147, 155, 236, 214, 139, 189, 131, 23, 146, 79, 177, 101, 212, 77, 186, 242, 155, 11, 107, 148, 90, 28, 138, 2, 168, 69, 85, 212, 195, 233, 184, 14, 191, 124, 202, 151, 84, 244, 233 }, "Admin", new DateTime(2021, 12, 16, 17, 0, 0, 406, DateTimeKind.Local).AddTicks(5527), "admin" });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CreatedOn", "PasswordHash", "PasswordSalt", "UpdatedOn", "UserName" },
-                values: new object[] { 2, new DateTime(2021, 12, 15, 19, 13, 51, 30, DateTimeKind.Local).AddTicks(2615), new byte[] { 37, 144, 251, 171, 150, 188, 155, 154, 222, 40, 250, 122, 189, 182, 155, 28, 115, 52, 19, 144, 248, 80, 152, 9, 203, 100, 53, 102, 132, 87, 125, 199, 211, 39, 207, 169, 193, 25, 17, 30, 80, 156, 16, 30, 15, 41, 99, 188, 20, 85, 34, 76, 119, 31, 87, 166, 154, 7, 94, 189, 43, 225, 228, 189 }, new byte[] { 37, 15, 139, 28, 196, 83, 191, 217, 88, 13, 71, 14, 154, 29, 26, 31, 181, 236, 55, 159, 248, 202, 173, 197, 158, 34, 164, 40, 254, 241, 222, 187, 246, 64, 46, 103, 160, 99, 219, 99, 117, 236, 130, 194, 247, 43, 13, 198, 192, 248, 158, 114, 86, 211, 46, 75, 185, 249, 244, 9, 19, 128, 21, 214, 147, 222, 10, 22, 142, 200, 178, 111, 31, 238, 165, 228, 32, 12, 54, 166, 172, 124, 237, 75, 97, 17, 161, 116, 149, 28, 89, 16, 86, 160, 15, 128, 41, 226, 81, 220, 183, 130, 107, 67, 68, 91, 103, 168, 151, 180, 4, 100, 33, 69, 229, 209, 96, 129, 195, 109, 164, 196, 26, 174, 14, 32, 108, 193 }, new DateTime(2021, 12, 15, 19, 13, 51, 30, DateTimeKind.Local).AddTicks(2617), "member" });
+                values: new object[] { 2, new DateTime(2021, 12, 16, 17, 0, 0, 406, DateTimeKind.Local).AddTicks(5559), new byte[] { 176, 163, 75, 188, 234, 178, 128, 235, 117, 123, 24, 10, 123, 13, 11, 37, 213, 116, 235, 5, 191, 5, 90, 133, 228, 15, 120, 210, 85, 144, 161, 200, 40, 91, 22, 1, 219, 184, 170, 45, 8, 145, 207, 230, 88, 21, 106, 121, 143, 255, 221, 112, 104, 96, 209, 111, 42, 246, 166, 63, 37, 38, 63, 117 }, new byte[] { 48, 240, 81, 69, 17, 40, 40, 117, 47, 198, 130, 192, 227, 200, 73, 99, 255, 138, 114, 10, 59, 25, 40, 181, 161, 114, 133, 118, 213, 3, 56, 120, 74, 125, 228, 33, 36, 87, 135, 61, 217, 142, 225, 46, 39, 151, 173, 47, 236, 139, 157, 212, 138, 65, 234, 76, 103, 17, 21, 6, 155, 130, 223, 120, 136, 134, 170, 232, 212, 200, 217, 222, 190, 131, 151, 135, 34, 52, 163, 48, 140, 132, 131, 119, 99, 232, 181, 233, 252, 153, 38, 43, 14, 53, 119, 94, 172, 5, 118, 7, 150, 66, 109, 112, 6, 69, 93, 79, 147, 240, 160, 189, 36, 110, 54, 236, 143, 145, 84, 170, 159, 172, 255, 145, 190, 29, 122, 57 }, new DateTime(2021, 12, 16, 17, 0, 0, 406, DateTimeKind.Local).AddTicks(5561), "member" });
 
             migrationBuilder.InsertData(
                 table: "ItemListings",
                 columns: new[] { "Id", "CategoryName", "Condition", "CreatedOn", "Description", "OwnerId", "Price", "Title" },
-                values: new object[] { 1, "Furniture", 2, new DateTime(2021, 12, 15, 19, 13, 51, 30, DateTimeKind.Local).AddTicks(3793), "Round folding dining table from Bob's Furniture Store.\nGreat for smaller dining areas/apartments. Smoke-free home.\n\nAsking price - $50.", 2, 50.0, "Round Folding Dining Table" });
+                values: new object[] { 1, "Furniture", 2, new DateTime(2021, 12, 16, 17, 0, 0, 406, DateTimeKind.Local).AddTicks(6848), "Round folding dining table from Bob's Furniture Store.\nGreat for smaller dining areas/apartments. Smoke-free home.\n\nAsking price - $50.", 2, 50.0, "Round Folding Dining Table" });
 
             migrationBuilder.InsertData(
                 table: "ItemListings",
                 columns: new[] { "Id", "CategoryName", "Condition", "CreatedOn", "Description", "OwnerId", "Price", "Title" },
-                values: new object[] { 2, "Electronics", 0, new DateTime(2021, 12, 15, 19, 13, 51, 30, DateTimeKind.Local).AddTicks(3806), "Absolutely brand new in the box (unopened box) 55 inch TCL 4K UHD Smart Roku TV.\n.Condition: Brand New In the (unopened). Same condition as you get from a store. Price: $330 Cash and Pick up only.", 2, 330.0, "Brand New 55\" inch TCL - 4K UHD Smart Roku TV" });
+                values: new object[] { 2, "Electronics", 0, new DateTime(2021, 12, 16, 17, 0, 0, 406, DateTimeKind.Local).AddTicks(6860), "Absolutely brand new in the box (unopened box) 55 inch TCL 4K UHD Smart Roku TV.\n.Condition: Brand New In the (unopened). Same condition as you get from a store. Price: $330 Cash and Pick up only.", 2, 330.0, "Brand New 55\" inch TCL - 4K UHD Smart Roku TV" });
 
             migrationBuilder.InsertData(
                 table: "ItemImages",

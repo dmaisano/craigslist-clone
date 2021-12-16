@@ -8,7 +8,7 @@ namespace API.Data.Repositories
 {
     public interface IItemListingRepository
     {
-        Task<IEnumerable<ItemListingDto>> GetAllItemsAsync(bool isHome = false);
+        Task<IEnumerable<ItemListingDto>> GetAllItemsAsync(string category = null);
         Task<ItemListingDto> AddNewItemAsync(AddItemListingDto dto, int userId);
     }
 
@@ -25,27 +25,28 @@ namespace API.Data.Repositories
             _photoService = photoService;
         }
 
-        public async Task<IEnumerable<ItemListingDto>> GetAllItemsAsync(bool isHome = false)
+        public async Task<IEnumerable<ItemListingDto>> GetAllItemsAsync(string category = null)
         {
+            if (category == null) return new List<ItemListingDto>();
+
             var items = _context.ItemListings
                 .Include(x => x.Images)
+                // .Where(x => EF.Functions.Like(x.CategoryName, $"%{category}%"))
+                .Where(x => x.CategoryName == category)
                 .AsQueryable();
 
-
-            if (isHome)
+            items = items.Select(x => new ItemListing
             {
-                items = items.Select(x => new ItemListing
-                {
-                    Id = x.Id,
-                    Title = x.Title,
-                    Price = x.Price,
-                    Description = x.Description,
-                    Condition = x.Condition,
-                    Archived = x.Archived,
-                    CategoryName = x.CategoryName,
-                    Images = new List<ItemImage> { x.Images.Where(x => x.IsMain).FirstOrDefault() },
-                });
-            }
+                Id = x.Id,
+                Title = x.Title,
+                Price = x.Price,
+                Description = x.Description,
+                Condition = x.Condition,
+                Archived = x.Archived,
+                CategoryName = x.CategoryName,
+                Images = new List<ItemImage> { x.Images.Where(x => x.IsMain).FirstOrDefault() },
+            });
+
             return await items.Select(x => new ItemListingDto(x)).ToListAsync();
         }
 

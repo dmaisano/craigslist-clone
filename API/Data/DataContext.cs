@@ -76,6 +76,15 @@ namespace API.Data
             //    .Property(e => e.Condition)
             //    .HasDefaultValue(ItemCondition.Fair);
 
+            builder.Entity<ItemCategory>()
+                .Property(x => x.Name)
+                .UseCollation("NOCASE"); // ? Case-insensitive comparisons
+
+            builder.Entity<ItemListing>()
+                .Property(x => x.CategoryName)
+                .UseCollation("NOCASE"); // ? Case-insensitive comparisons
+
+
             builder.Entity<ItemListing>()
                .Property(e => e.CreatedOn)
                .HasDefaultValueSql("datetime('now')");

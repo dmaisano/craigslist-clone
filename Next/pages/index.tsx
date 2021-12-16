@@ -1,3 +1,4 @@
+import { Container, Divider } from "@chakra-ui/react";
 import axios from "axios";
 import {
   GetServerSideProps,
@@ -42,9 +43,11 @@ const HomePage: NextPage<
       </Head>
 
       <Layout>
-        <p>items</p>
-
-        {JSON.stringify(items)}
+        <Container mt="16" maxW="container.sm">
+          {items.map((item) => {
+            return <div key={item.id}>{item.title}</div>;
+          })}
+        </Container>
       </Layout>
     </>
   );

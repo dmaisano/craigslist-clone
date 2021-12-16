@@ -14,6 +14,8 @@ namespace API.Utilities
             CreateMap<AddItemListingDto, ItemListing>();
 
             CreateMap<ItemListing, ItemListingDto>();
+
+            CreateMap<ItemCategory, ItemCategoryDto>();
         }
     }
 }
