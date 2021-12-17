@@ -86,7 +86,7 @@ const RegisterLoginForm: React.FC<{
             <FormLabel htmlFor="usernameOrEmail">Username Or Email</FormLabel>
             <Input
               id="usernameOrEmail"
-              type="email"
+              type="text"
               placeholder="Please enter your username or email..."
               {...register(`usernameOrEmail`, {
                 required: true,

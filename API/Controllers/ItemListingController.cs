@@ -18,8 +18,10 @@ namespace API.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ItemListingDto>>> GetAllItems([FromQuery] string category = null)
+        public async Task<ActionResult<IEnumerable<ItemListingDto>>> GetItemsFromCategory([FromQuery] string category = null)
         {
+            if (String.IsNullOrEmpty(category)) return NotFound();
+
             // For the sake of time I'm not doing any pagination
             var items = await _unitOfWork.ItemListingRepository.GetAllItemsAsync(category);
 

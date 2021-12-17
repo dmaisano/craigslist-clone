@@ -40,13 +40,19 @@ const Navbar: React.FC = ({}) => {
         <Flex alignItems="center" fontWeight="semibold">
           {user.username && user.token ? (
             <>
+              {/* I probably won't have the time to implement this feature */}
               <NextChakraLink mr="4" href={`/manage-items`}>
-                <Button>Manage Items</Button>
+                <Button>Manage</Button>
               </NextChakraLink>
               <NextChakraLink mr="4" href={`/sell-item`}>
-                <Button>Post Item For Sale</Button>
+                <Button>Post</Button>
               </NextChakraLink>
-              <Text color="gray.200" float="left" mr="4">
+              <Text
+                display={["none", "inherit"]}
+                color="gray.200"
+                float="left"
+                mr="4"
+              >
                 {`${user.username}`}
               </Text>
 

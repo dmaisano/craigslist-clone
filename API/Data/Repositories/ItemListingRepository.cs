@@ -32,7 +32,7 @@ namespace API.Data.Repositories
             var items = _context.ItemListings
                 .Include(x => x.Images)
                 .Include(x => x.Owner)
-                .Where(x => x.CategoryName == category)
+                .Where(x => !x.Archived && x.CategoryName == category)
                 .AsQueryable();
 
             items = items.Select(x => new ItemListing

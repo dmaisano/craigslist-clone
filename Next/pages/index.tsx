@@ -44,7 +44,7 @@ const HomePage: NextPage<
 
       <Layout>
         <Container mt="16" maxW="container.sm" textAlign="center">
-          <Heading as="h2" mb="8">
+          <Heading as="h2" mb="8" textTransform="uppercase">
             For Sale
           </Heading>
 
