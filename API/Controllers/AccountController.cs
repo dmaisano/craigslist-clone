@@ -27,7 +27,10 @@ namespace API.Controllers
 
             if (registerDto.Password != registerDto.ConfirmPassword) return BadRequest("Passwords do not match");
 
-            if (await _userRepo.UserExistsAsync(username)) return BadRequest("User already exists");
+            if (await _userRepo.UserExistsAsync(username)) return StatusCode(StatusCodes.Status403Forbidden, new
+            {
+                error = "User already exists"
+            });
 
             var user = new AppUser();
             try

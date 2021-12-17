@@ -1,10 +1,101 @@
-import { Container } from "@chakra-ui/react";
-import { NextPage } from "next";
+import {
+  Button,
+  Container,
+  FormControl,
+  FormLabel,
+  Input,
+  Select,
+  SimpleGrid,
+} from "@chakra-ui/react";
+import axios from "axios";
+import { m } from "framer-motion";
+import {
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  NextPage,
+} from "next";
 import Head from "next/head";
-import React from "react";
+import React, { useState } from "react";
+import { useForm, useWatch } from "react-hook-form";
+import NumberFormat from "react-number-format";
 import { Layout } from "../components";
+import { AutoResizeTextarea } from "../components/AutoResizeTextArea";
+import FormErrorText from "../components/FormErrorText";
+import { API_URL } from "../constants";
+import { IItemCategory } from "../model/itemCategory.model";
+import { ItemCondition } from "../model/items.model";
 
-const SellItemPage: NextPage = ({}) => {
+export const getServerSideProps: GetServerSideProps<{
+  categories: IItemCategory[];
+}> = async () => {
+  let categories: IItemCategory[] = [];
+
+  try {
+    const res = await axios.get<IItemCategory[]>(`${API_URL}/categories`);
+
+    if (res.data && res.data.length > 0) {
+      categories = res.data;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  return {
+    props: {
+      categories,
+    },
+  };
+};
+
+type FormValues = {
+  title: string;
+  condition: number | null;
+  fileImages: FileList[];
+  categoryName: string;
+  description: string;
+};
+
+const testValues: FormValues = {
+  title: `Cat (not really for sale)`,
+  condition: ItemCondition.Excellent,
+  fileImages: [],
+  categoryName: `Furniture`,
+  description: `I would never sell a cat. This is a test.`,
+};
+
+const SellItemPage: NextPage<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ categories }) => {
+  const [price, setPrice] = useState<number>(0);
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isValid, touchedFields },
+  } = useForm<FormValues>({
+    mode: `onChange`,
+    reValidateMode: `onChange`,
+    // defaultValues: {
+    //   title: ``,
+    //   categoryName: ``,
+    //   condition: null,
+    //   description: ``,
+    //   fileImages: [],
+    // },
+    defaultValues: testValues,
+  });
+
+  const formData = useWatch({ control });
+
+  const onSubmit = handleSubmit(async (data: FormValues) => {
+    try {
+      const payload = {
+        ...data,
+        price,
+      };
+      console.log({ payload });
+    } catch (error) {}
+  });
+
   return (
     <>
       <Head>
@@ -14,10 +105,118 @@ const SellItemPage: NextPage = ({}) => {
       </Head>
 
       <Layout>
-        <Container mt="8" maxW="600px">
-          <form>
-            {/* Although the API supports multi-image uploading in a single request, I'm going to only allow one image per upload */}
-            <input type="file" />
+        <Container
+          mt="8"
+          maxW="container.md"
+          sx={{
+            ".chakra-form-control": {
+              mt: 4,
+            },
+          }}
+        >
+          <form onSubmit={onSubmit}>
+            <FormControl id="title">
+              <FormLabel htmlFor="title">Title</FormLabel>
+              <Input
+                type="text"
+                placeholder="Please enter a title..."
+                {...register(`title`, {
+                  required: true,
+                })}
+              />
+              <FormErrorText error={errors.title} />
+            </FormControl>
+
+            <SimpleGrid columns={[1, 1, 3]} spacingX={4}>
+              <FormControl id="price" width="full">
+                <FormLabel htmlFor="price">Price</FormLabel>
+                <NumberFormat
+                  customInput={Input}
+                  prefix="$ "
+                  decimalScale={2}
+                  thousandSeparator
+                  allowEmptyFormatting
+                  allowNegative={false}
+                  value={price}
+                  onValueChange={({ floatValue }) => {
+                    if (typeof floatValue === `number`) {
+                      setPrice(floatValue);
+                    }
+                  }}
+                />
+              </FormControl>
+
+              <FormControl id="categoryName" width="full">
+                <FormLabel htmlFor="categoryName">Category Name</FormLabel>
+                <Select
+                  placeholder="Select a category"
+                  {...register(`categoryName`, {
+                    required: true,
+                  })}
+                >
+                  {categories.map(({ name: cName }) => (
+                    <option key={cName}>{cName}</option>
+                  ))}
+                </Select>
+                <FormErrorText error={errors.categoryName} />
+              </FormControl>
+
+              <FormControl id="condition">
+                <FormLabel htmlFor="condition">Condition</FormLabel>
+                <Select
+                  placeholder="Select a category"
+                  {...register(`condition`, {
+                    required: true,
+                    valueAsNumber: true,
+                  })}
+                >
+                  <option value={ItemCondition.New}>New</option>
+                  <option value={ItemCondition.LikeNew}>Like New</option>
+                  <option value={ItemCondition.Excellent}>Excellent</option>
+                  <option value={ItemCondition.Good}>Good</option>
+                  <option value={ItemCondition.Fair}>Fair</option>
+                  <option value={ItemCondition.Salvage}>Salvage</option>
+                </Select>
+                <FormErrorText error={errors.condition} />
+              </FormControl>
+            </SimpleGrid>
+
+            <FormControl id="description">
+              <FormLabel htmlFor="description">Description</FormLabel>
+              <AutoResizeTextarea
+                placeholder="Please enter a description..."
+                minH="250px"
+                maxH="600px"
+                {...register(`description`, {
+                  required: false,
+                })}
+              />
+            </FormControl>
+
+            <FormControl mt="4" id="fileImages">
+              <FormLabel htmlFor="fileImages">
+                Images. Max size 5mb. JPG | PNG
+              </FormLabel>
+
+              <input
+                type="file"
+                multiple
+                accept="image/jpeg,image/png"
+                {...register(`fileImages`, {
+                  required: true,
+                })}
+              />
+            </FormControl>
+
+            <Button
+              disabled={!isValid || isSubmitting}
+              colorScheme="blue"
+              isLoading={isSubmitting}
+              type="submit"
+              mt="4"
+            >
+              Post
+            </Button>
           </form>
         </Container>
       </Layout>

@@ -47,7 +47,7 @@ const Navbar: React.FC = ({}) => {
                 <Button>Post Item For Sale</Button>
               </NextChakraLink>
               <Text color="gray.200" float="left" mr="4">
-                logged in as {`"${user.username}"`}
+                {`${user.username}`}
               </Text>
 
               <Button onClick={() => logout()}>Logout</Button>

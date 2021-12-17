@@ -9,7 +9,6 @@ import Head from "next/head";
 import { Layout, NextChakraLink } from "../components";
 import { API_URL } from "../constants";
 import { IItemCategory } from "../model/itemCategory.model";
-import { IItemListing } from "../model/items.model";
 
 export const getServerSideProps: GetServerSideProps<{
   categories: IItemCategory[];
