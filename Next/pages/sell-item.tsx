@@ -1,6 +1,8 @@
 import {
+  Box,
   Button,
   Container,
+  Flex,
   FormControl,
   FormLabel,
   Input,
@@ -8,22 +10,22 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { m } from "framer-motion";
 import {
   GetServerSideProps,
   InferGetServerSidePropsType,
   NextPage,
 } from "next";
 import Head from "next/head";
-import React, { useState } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import React, { useContext, useState } from "react";
+import { useForm } from "react-hook-form";
 import NumberFormat from "react-number-format";
-import { Layout } from "../components";
+import { Layout, NextChakraLink } from "../components";
 import { AutoResizeTextarea } from "../components/AutoResizeTextArea";
 import FormErrorText from "../components/FormErrorText";
 import { API_URL } from "../constants";
 import { IItemCategory } from "../model/itemCategory.model";
 import { ItemCondition } from "../model/items.model";
+import { AppUserContext } from "./_app";
 
 export const getServerSideProps: GetServerSideProps<{
   categories: IItemCategory[];
@@ -49,7 +51,7 @@ export const getServerSideProps: GetServerSideProps<{
 type FormValues = {
   title: string;
   condition: number | null;
-  fileImages: FileList[];
+  fileImages: FileList | null;
   categoryName: string;
   description: string;
 };
@@ -57,7 +59,7 @@ type FormValues = {
 const testValues: FormValues = {
   title: `Cat (not really for sale)`,
   condition: ItemCondition.Excellent,
-  fileImages: [],
+  fileImages: null,
   categoryName: `Furniture`,
   description: `I would never sell a cat. This is a test.`,
 };
@@ -65,9 +67,10 @@ const testValues: FormValues = {
 const SellItemPage: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ categories }) => {
+  const [{ token }] = useContext(AppUserContext);
   const [price, setPrice] = useState<number>(0);
+  const [successfullySubmitted, setSubmit] = useState(false);
   const {
-    control,
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid, touchedFields },
@@ -84,16 +87,51 @@ const SellItemPage: NextPage<
     defaultValues: testValues,
   });
 
-  const formData = useWatch({ control });
-
   const onSubmit = handleSubmit(async (data: FormValues) => {
     try {
       const payload = {
         ...data,
         price,
       };
-      console.log({ payload });
-    } catch (error) {}
+
+      const formData = new FormData();
+      for (const [key, value] of Object.entries(payload)) {
+        if (value instanceof FileList) {
+          const images = value as FileList;
+
+          for (let i = 0; i < images.length; i++) {
+            const image = images.item(i);
+
+            // skipping images larger than 5mb
+            if (image && image?.size > 5242880) {
+              continue;
+            }
+
+            formData.append(key, image as Blob, image?.name);
+          }
+        } else {
+          if (key !== null && value !== null) {
+            formData.append(key, value.toString());
+          }
+        }
+      }
+
+      const res = await axios.post(
+        `${API_URL}/item-listing/add-new-item`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (res.status === 200) {
+        setSubmit(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   });
 
   return (
@@ -208,15 +246,25 @@ const SellItemPage: NextPage<
               />
             </FormControl>
 
-            <Button
-              disabled={!isValid || isSubmitting}
-              colorScheme="blue"
-              isLoading={isSubmitting}
-              type="submit"
-              mt="4"
-            >
-              Post
-            </Button>
+            <Flex alignItems="center" mt="6">
+              <Button
+                disabled={!isValid || isSubmitting || successfullySubmitted}
+                colorScheme="blue"
+                isLoading={isSubmitting}
+                type="submit"
+                mr="4"
+              >
+                {successfullySubmitted ? `Posted` : `Submit`}
+              </Button>
+              <NextChakraLink
+                href={"/"}
+                color="blue.500"
+                fontWeight="semibold"
+                fontSize="1xl"
+              >
+                Go Home
+              </NextChakraLink>
+            </Flex>
           </form>
         </Container>
       </Layout>

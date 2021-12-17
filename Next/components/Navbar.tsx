@@ -33,7 +33,7 @@ const Navbar: React.FC = ({}) => {
       >
         <Heading as="h3" color="white" fontWeight="normal">
           <NextChakraLink href="/" _hover={{ textDecoration: `none` }}>
-            Craigslist Clone
+            🏡
           </NextChakraLink>
         </Heading>
 
