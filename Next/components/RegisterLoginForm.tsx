@@ -15,8 +15,10 @@ import { AppUserContext } from "../pages/_app";
 
 type FormValues = {
   username: string;
+  usernameOrEmail: string;
+  email: string;
   password: string;
-  confirmPassword?: string;
+  confirmPassword: string;
 };
 
 const RegisterLoginForm: React.FC<{
@@ -35,6 +37,8 @@ const RegisterLoginForm: React.FC<{
     reValidateMode: `onChange`,
     defaultValues: {
       ...DEFAULT_USER,
+      usernameOrEmail: ``,
+      email: ``,
       confirmPassword: action === `register` ? `` : undefined,
     },
   });
@@ -67,23 +71,62 @@ const RegisterLoginForm: React.FC<{
 
   return (
     <form onSubmit={onSubmit}>
-      <FormControl id="username">
-        <FormLabel htmlFor="username">Username</FormLabel>
-        <Input
-          id="username"
-          type="text"
-          placeholder="Please enter a username..."
-          {...register(`username`, {
-            required: true,
-            validate: (value) => value.length > 0 || `Required`,
-          })}
-        />
-        {errors.username && (
-          <FormHelperText color="red" fontWeight="semibold">
-            {errors.username.message || `Required`}
-          </FormHelperText>
-        )}
-      </FormControl>
+      {action === `login` ? (
+        <FormControl id="usernameOrEmail">
+          <FormLabel htmlFor="usernameOrEmail">Username Or Email</FormLabel>
+          <Input
+            id="usernameOrEmail"
+            type="text"
+            placeholder="Please enter your username or email..."
+            {...register(`usernameOrEmail`, {
+              required: true,
+              validate: (value) => value.length > 0 || `Required`,
+            })}
+          />
+          {errors.usernameOrEmail && (
+            <FormHelperText color="red" fontWeight="semibold">
+              {errors.usernameOrEmail.message || `Required`}
+            </FormHelperText>
+          )}
+        </FormControl>
+      ) : (
+        <FormControl id="username">
+          <FormLabel htmlFor="username">Username</FormLabel>
+          <Input
+            id="username"
+            type="text"
+            placeholder="Please enter a username..."
+            {...register(`username`, {
+              required: true,
+              validate: (value) => value.length > 0 || `Required`,
+            })}
+          />
+          {errors.username && (
+            <FormHelperText color="red" fontWeight="semibold">
+              {errors.username.message || `Required`}
+            </FormHelperText>
+          )}
+        </FormControl>
+      )}
+      {action === `register` && (
+        <FormControl id="email" mt="4">
+          <FormLabel htmlFor="email">Email</FormLabel>
+          <Input
+            id="email"
+            type="text"
+            placeholder="Please enter a valid email..."
+            {...register(`email`, {
+              required: true,
+              validate: (value) => value.length > 0 || `Required`,
+            })}
+          />
+          {errors.email && (
+            <FormHelperText color="red" fontWeight="semibold">
+              {errors.email.message || `Required`}
+            </FormHelperText>
+          )}
+        </FormControl>
+      )}
       <FormControl mt="4" id="password">
         <FormLabel htmlFor="password">Password</FormLabel>
         <Input
@@ -131,7 +174,7 @@ const RegisterLoginForm: React.FC<{
         isLoading={isSubmitting}
         type="submit"
       >
-        Submit
+        {action === `login` ? `Sign In` : `Sign Up`}
       </Button>
     </form>
   );
