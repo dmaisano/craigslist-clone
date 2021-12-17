@@ -6,8 +6,10 @@ export interface IItemListing {
   price: number;
   description: string;
   condition: ItemCondition;
+  datePosted: any;
   archived: boolean;
   categoryName: string;
+  ownerEmail: string;
   images: IPhoto[];
   errors?: any;
 }

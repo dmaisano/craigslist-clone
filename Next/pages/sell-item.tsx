@@ -131,6 +131,7 @@ const SellItemPage: NextPage<
       }
     } catch (error) {
       console.error(error);
+      alert(`Failed to post item`);
     }
   });
 

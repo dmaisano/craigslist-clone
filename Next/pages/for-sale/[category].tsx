@@ -8,6 +8,7 @@ import {
 import Head from "next/head";
 import { Layout } from "../../components";
 import ItemCard from "../../components/ItemCard";
+import { API_URL } from "../../constants";
 import { IItemListing } from "../../model/items.model";
 
 export const getServerSideProps: GetServerSideProps<{
@@ -27,7 +28,7 @@ export const getServerSideProps: GetServerSideProps<{
   }
 
   try {
-    const res = await axios.get<any>(`http://localhost:5100/api/item-listing`, {
+    const res = await axios.get<any>(`${API_URL}/item-listing`, {
       params: { category },
     });
 

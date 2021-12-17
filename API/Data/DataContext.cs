@@ -111,6 +111,8 @@ namespace API.Data
             {
                 new ItemCategory { Name = "Electronics" },
                 new ItemCategory { Name = "Furniture" },
+                new ItemCategory { Name = "Sporting" },
+                new ItemCategory { Name = "Misc." },
             };
             builder.Entity<ItemCategory>()
                 .HasData(categories);

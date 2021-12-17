@@ -1,15 +1,28 @@
+import moment from "moment";
+
 export const allowOnlyNumber = (value: string) => {
   return value.replace(/[^0-9]/g, "");
 };
 
-const isValidNumber = (value: string, errorMsg = `Invalid number`) => {
-  const matches = value.match(
-    /^(?:0\.(?:0[0-9]|[0-9]\d?)|[0-9]\d*(?:\.\d{1,2})?)(?:e[+-]?\d+)?$/,
-  );
+// ? Reference: https://stackoverflow.com/questions/26188882/split-pascal-case-in-javascript-certain-case/26188910
+export const splitPascalCase = (word: string) => {
+  var re = /($[a-z])|[A-Z][^A-Z]+/g;
+  const match = word.match(re);
 
-  if (matches) {
-    return matches.length > 0 || errorMsg;
+  if (match) {
+    return match.join(` `);
   }
 
-  return errorMsg;
+  return word;
+};
+
+export const formatDateString = (dateString: string) => {
+  try {
+    // const date = Date.parse(dateString);
+    const date = moment(dateString);
+
+    return date.format(`MM/DD/YY`);
+  } catch (error) {
+    return `Invalid Date`;
+  }
 };

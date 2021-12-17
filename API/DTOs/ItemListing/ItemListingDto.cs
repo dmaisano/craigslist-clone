@@ -14,6 +14,8 @@ namespace API.DTOs
 
         public ItemCondition Condition { get; set; }
 
+        public DateTime DatePosted { get; set; }
+
         public bool Archived { get; set; }
 
         public string CategoryName { get; set; }
@@ -36,6 +38,7 @@ namespace API.DTOs
             Price = itemListing.Price;
             Description = itemListing.Description;
             Condition = itemListing.Condition;
+            DatePosted = itemListing.CreatedOn;
             Archived = itemListing.Archived;
             CategoryName = itemListing.CategoryName;
             OwnerEmail = itemListing.OwnerEmail;
@@ -49,6 +52,7 @@ namespace API.DTOs
             Price = itemListing.Price;
             Description = itemListing.Description;
             Condition = itemListing.Condition;
+            DatePosted = itemListing.CreatedOn;
             Archived = itemListing.Archived;
             CategoryName = itemListing.CategoryName;
             Images = images;

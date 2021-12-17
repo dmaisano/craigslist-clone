@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Authorize]
     [Route("api/item-listing")]
     public class ItemListingController : BaseApiController
     {
@@ -16,7 +15,6 @@ namespace API.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ItemListingDto>>> GetItemsFromCategory([FromQuery] string category = null)
         {
@@ -28,12 +26,22 @@ namespace API.Controllers
             return Ok(items);
         }
 
+        [HttpGet("{itemId}")]
+        public async Task<ActionResult<ItemListingDto>> GetItemFromId(int itemId = -1)
+        {
+            if (itemId < 1) return NotFound();
+
+            var item = await _unitOfWork.ItemListingRepository.GetItemFromIdAsync(itemId);
+
+            return item;
+        }
+
+        [Authorize]
         [HttpPost("add-new-item")]
         public async Task<ActionResult<ItemListingDto>> AddItemListing([FromForm] AddItemListingDto dto)
         {
             try
             {
-                var claim = User;
                 var user = await _unitOfWork.GetUserByIdAsync(User.GetUserId());
                 var result = await _unitOfWork.ItemListingRepository.AddNewItemAsync(dto, user.Id);
                 return result;
@@ -42,6 +50,26 @@ namespace API.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
+        }
+
+        [HttpDelete("{itemId}")]
+        public async Task<ActionResult> DeleteItem(int itemId = -1)
+        {
+            try
+            {
+                if (itemId < 1) return BadRequest();
+
+                var user = await _unitOfWork.GetUserByIdAsync(User.GetUserId());
+                var result = await _unitOfWork.ItemListingRepository.ArchiveItemAsync(itemId, user.Id);
+
+                if (result) return Ok();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return StatusCode(StatusCodes.Status403Forbidden);
         }
     }
 }

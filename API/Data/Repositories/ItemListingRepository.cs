@@ -9,7 +9,9 @@ namespace API.Data.Repositories
     public interface IItemListingRepository
     {
         Task<IEnumerable<ItemListingDto>> GetAllItemsAsync(string category = null);
+        Task<ItemListingDto> GetItemFromIdAsync(int id);
         Task<ItemListingDto> AddNewItemAsync(AddItemListingDto dto, int userId);
+        Task<bool> ArchiveItemAsync(int id, int userId);
     }
 
     public class ItemListingRepository : IItemListingRepository
@@ -49,6 +51,22 @@ namespace API.Data.Repositories
             });
 
             return await items.Select(x => new ItemListingDto(x)).ToListAsync();
+        }
+
+        public async Task<ItemListingDto> GetItemFromIdAsync(int id)
+        {
+            var item = await _context.ItemListings
+                .Where(x => x.Id == id && !x.Archived)
+                .Include(x => x.Images)
+                .Include(x => x.Owner)
+                .SingleOrDefaultAsync();
+
+            if (item == null) return null;
+
+            var itemDto = new ItemListingDto(item);
+            itemDto.OwnerEmail = item.Owner.Email;
+
+            return itemDto;
         }
 
         public async Task<ItemListingDto> AddNewItemAsync(AddItemListingDto dto, int userId)
@@ -114,6 +132,21 @@ namespace API.Data.Repositories
             }
 
             return itemToReturn;
+        }
+
+        public async Task<bool> ArchiveItemAsync(int id, int userId)
+        {
+            var itemToDelete = await _context.ItemListings
+                .Where(x => x.Id == id && x.OwnerId == userId)
+                .FirstOrDefaultAsync();
+
+            if (itemToDelete == null) return false;
+
+            itemToDelete.Archived = true;
+            _context.ItemListings.Update(itemToDelete);
+
+            // ? In an ideal scenario I'm assuming it would be better to omit the "SaveChangesAsync()" and call the unit of work complete method if I'm tracking multiple changes in some sort of use-case
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

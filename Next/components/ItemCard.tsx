@@ -1,24 +1,15 @@
 import { Box, BoxProps, Image, Text } from "@chakra-ui/react";
 import React from "react";
 import { NextChakraLink } from ".";
-import { IItemListing } from "../model/items.model";
+import { IItemListing, ItemCondition } from "../model/items.model";
+import { formatDateString, splitPascalCase } from "../utils";
 
 const ItemCard: React.FC<
   BoxProps & {
     item: IItemListing;
   }
 > = ({
-  item: {
-    id: itemId,
-    title,
-    price,
-    description,
-    condition,
-    archived,
-    categoryName,
-    images,
-    errors,
-  },
+  item: { id: itemId, title, price, condition, datePosted, images },
   ...boxProps
 }) => {
   return (
@@ -43,7 +34,7 @@ const ItemCard: React.FC<
 
       <Box mt="4">
         <NextChakraLink
-          href={`/view-item/${itemId}`}
+          href={`/listing/${itemId}`}
           color="blue.500"
           fontWeight="bold"
           fontSize="1xl"
@@ -52,7 +43,11 @@ const ItemCard: React.FC<
         </NextChakraLink>
 
         <Text fontWeight="semibold" mt="2">
-          ${price.toFixed(2)}
+          ${price.toFixed(2)} | {splitPascalCase(ItemCondition[condition])}
+        </Text>
+
+        <Text fontWeight="semibold" mt="2">
+          {formatDateString(datePosted)}
         </Text>
       </Box>
     </Box>

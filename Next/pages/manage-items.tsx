@@ -6,7 +6,7 @@ import { Layout, NextChakraLink } from "../components";
 import { AppUserContext } from "./_app";
 
 const SellItemPage: NextPage = ({}) => {
-  const [user] = useContext(AppUserContext);
+  const [{ token, username }] = useContext(AppUserContext);
 
   return (
     <>
@@ -18,7 +18,7 @@ const SellItemPage: NextPage = ({}) => {
 
       <Layout>
         <Container mt="8" maxW="600px" textAlign="center">
-          {!user.username || !user.token ? (
+          {!username || !token ? (
             <Box>
               <Heading as="h3" fontSize="2xl" fontWeight="medium" mb="6">
                 Not Logged In
@@ -28,7 +28,7 @@ const SellItemPage: NextPage = ({}) => {
               </NextChakraLink>
             </Box>
           ) : (
-            <Box></Box>
+            <Box fontSize="3xl">404 Page</Box>
           )}
         </Container>
       </Layout>
