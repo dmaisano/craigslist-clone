@@ -56,13 +56,13 @@ type FormValues = {
   description: string;
 };
 
-const testValues: FormValues = {
-  title: `Cat (not really for sale)`,
-  condition: ItemCondition.Excellent,
-  fileImages: null,
-  categoryName: `Furniture`,
-  description: `I would never sell a cat. This is a test.`,
-};
+// const testValues: FormValues = {
+//   title: `Cat (not really for sale)`,
+//   condition: ItemCondition.Excellent,
+//   fileImages: null,
+//   categoryName: `Furniture`,
+//   description: `I would never sell a cat. This is a test.`,
+// };
 
 const SellItemPage: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
@@ -77,14 +77,13 @@ const SellItemPage: NextPage<
   } = useForm<FormValues>({
     mode: `onChange`,
     reValidateMode: `onChange`,
-    // defaultValues: {
-    //   title: ``,
-    //   categoryName: ``,
-    //   condition: null,
-    //   description: ``,
-    //   fileImages: [],
-    // },
-    defaultValues: testValues,
+    defaultValues: {
+      title: ``,
+      categoryName: ``,
+      condition: null,
+      description: ``,
+      fileImages: null,
+    },
   });
 
   const onSubmit = handleSubmit(async (data: FormValues) => {
