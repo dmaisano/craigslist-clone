@@ -66,23 +66,23 @@ namespace API.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2021, 12, 17, 12, 19, 58, 95, DateTimeKind.Local).AddTicks(3657),
+                            CreatedOn = new DateTime(2021, 12, 17, 15, 32, 15, 717, DateTimeKind.Local).AddTicks(6863),
                             Email = "admin@domain.net",
-                            PasswordHash = new byte[] { 58, 209, 167, 71, 186, 101, 146, 55, 198, 238, 197, 70, 131, 250, 81, 169, 98, 105, 221, 203, 182, 37, 226, 241, 93, 251, 234, 53, 208, 13, 248, 140, 39, 210, 173, 167, 251, 23, 16, 235, 18, 248, 11, 62, 207, 140, 245, 30, 217, 45, 158, 116, 107, 30, 242, 243, 46, 191, 254, 144, 112, 48, 193, 40 },
-                            PasswordSalt = new byte[] { 169, 157, 151, 254, 187, 185, 253, 181, 142, 117, 23, 170, 242, 61, 2, 235, 93, 119, 66, 128, 211, 129, 235, 3, 130, 21, 64, 124, 235, 65, 8, 6, 93, 5, 234, 181, 159, 244, 3, 210, 97, 120, 94, 253, 98, 178, 9, 201, 255, 140, 132, 159, 22, 65, 103, 9, 92, 118, 67, 242, 253, 160, 68, 81, 138, 91, 252, 115, 204, 96, 102, 167, 209, 134, 206, 168, 162, 202, 223, 238, 245, 46, 116, 58, 31, 224, 57, 78, 35, 184, 83, 122, 166, 174, 245, 104, 138, 197, 252, 0, 7, 0, 22, 245, 50, 68, 172, 145, 215, 25, 160, 85, 184, 215, 83, 185, 60, 177, 111, 19, 173, 208, 247, 22, 20, 241, 178, 55 },
+                            PasswordHash = new byte[] { 147, 169, 37, 239, 194, 203, 14, 83, 61, 156, 178, 154, 153, 96, 181, 145, 174, 140, 36, 35, 0, 8, 234, 38, 28, 187, 199, 223, 74, 132, 207, 136, 47, 207, 69, 210, 221, 210, 129, 238, 188, 63, 109, 227, 88, 254, 191, 84, 63, 6, 160, 246, 114, 104, 84, 232, 180, 43, 163, 166, 54, 197, 38, 123 },
+                            PasswordSalt = new byte[] { 21, 91, 132, 4, 201, 163, 152, 203, 197, 43, 84, 153, 34, 229, 242, 111, 71, 156, 68, 155, 172, 158, 127, 180, 12, 57, 52, 19, 46, 236, 191, 126, 188, 12, 107, 45, 120, 3, 220, 213, 47, 49, 191, 127, 188, 218, 192, 24, 150, 167, 153, 230, 178, 86, 12, 102, 54, 4, 156, 86, 149, 172, 138, 57, 156, 253, 44, 123, 170, 87, 171, 159, 74, 219, 70, 252, 16, 106, 167, 222, 247, 143, 176, 19, 79, 120, 77, 22, 29, 75, 11, 78, 169, 213, 248, 168, 187, 165, 129, 157, 12, 134, 144, 113, 53, 211, 202, 207, 147, 111, 159, 216, 217, 23, 220, 160, 75, 11, 221, 118, 136, 194, 106, 196, 135, 18, 165, 179 },
                             Role = "Admin",
-                            UpdatedOn = new DateTime(2021, 12, 17, 12, 19, 58, 95, DateTimeKind.Local).AddTicks(3660),
+                            UpdatedOn = new DateTime(2021, 12, 17, 15, 32, 15, 717, DateTimeKind.Local).AddTicks(6866),
                             UserName = "admin"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2021, 12, 17, 12, 19, 58, 95, DateTimeKind.Local).AddTicks(3719),
+                            CreatedOn = new DateTime(2021, 12, 17, 15, 32, 15, 717, DateTimeKind.Local).AddTicks(6903),
                             Email = "member@domain.net",
-                            PasswordHash = new byte[] { 7, 81, 174, 206, 23, 170, 183, 33, 154, 232, 29, 38, 240, 114, 153, 103, 147, 14, 205, 129, 182, 71, 110, 232, 98, 7, 255, 18, 215, 207, 5, 36, 45, 6, 7, 148, 249, 168, 79, 90, 172, 120, 14, 146, 25, 63, 6, 99, 136, 255, 249, 190, 214, 234, 1, 160, 52, 214, 154, 49, 109, 36, 110, 100 },
-                            PasswordSalt = new byte[] { 226, 144, 144, 51, 219, 50, 63, 255, 55, 131, 86, 232, 207, 178, 179, 15, 27, 140, 191, 18, 254, 238, 154, 97, 112, 191, 230, 49, 98, 15, 100, 111, 214, 218, 213, 14, 132, 4, 3, 183, 137, 163, 85, 6, 246, 233, 214, 33, 230, 139, 10, 205, 214, 4, 238, 174, 31, 133, 174, 144, 218, 126, 20, 77, 6, 126, 174, 230, 142, 97, 80, 18, 133, 181, 71, 230, 46, 213, 131, 239, 152, 72, 195, 52, 29, 191, 49, 102, 26, 61, 12, 31, 40, 205, 148, 66, 43, 30, 30, 105, 83, 182, 129, 119, 252, 131, 39, 176, 227, 176, 244, 200, 158, 231, 112, 65, 103, 240, 209, 216, 149, 198, 201, 10, 96, 250, 174, 12 },
+                            PasswordHash = new byte[] { 24, 220, 40, 187, 142, 89, 214, 58, 41, 200, 130, 250, 104, 153, 61, 29, 177, 200, 226, 163, 220, 22, 195, 102, 161, 169, 56, 41, 110, 176, 208, 221, 239, 209, 7, 38, 246, 66, 191, 11, 217, 159, 50, 9, 1, 252, 115, 1, 133, 192, 139, 212, 69, 170, 231, 75, 96, 185, 85, 101, 50, 4, 182, 1 },
+                            PasswordSalt = new byte[] { 49, 135, 231, 204, 147, 28, 81, 67, 173, 227, 158, 31, 217, 228, 235, 13, 234, 2, 103, 126, 88, 130, 133, 247, 103, 167, 19, 184, 141, 131, 43, 181, 253, 65, 194, 211, 94, 15, 148, 172, 235, 178, 189, 245, 83, 164, 17, 42, 157, 214, 6, 135, 152, 234, 219, 151, 26, 15, 25, 165, 27, 105, 53, 48, 113, 181, 76, 211, 74, 250, 216, 63, 73, 134, 122, 187, 162, 193, 81, 233, 117, 42, 24, 160, 242, 255, 220, 124, 122, 44, 91, 211, 162, 131, 57, 30, 228, 139, 111, 255, 45, 7, 241, 167, 132, 228, 64, 243, 87, 184, 38, 20, 242, 184, 17, 224, 62, 124, 157, 108, 175, 207, 108, 104, 223, 124, 138, 119 },
                             Role = "Member",
-                            UpdatedOn = new DateTime(2021, 12, 17, 12, 19, 58, 95, DateTimeKind.Local).AddTicks(3720),
+                            UpdatedOn = new DateTime(2021, 12, 17, 15, 32, 15, 717, DateTimeKind.Local).AddTicks(6905),
                             UserName = "member"
                         });
                 });
@@ -152,8 +152,8 @@ namespace API.Migrations
                             Id = 1,
                             IsMain = true,
                             ItemListingId = 1,
-                            OwnerId = 2,
-                            PublicId = "tcl_tv_ufvgvz",
+                            OwnerId = 1,
+                            PublicId = "folding_table_rgrmom",
                             Url = "https://res.cloudinary.com/dub1phgqv/image/upload/v1639551491/folding_table_rgrmom.jpg"
                         },
                         new
@@ -161,9 +161,27 @@ namespace API.Migrations
                             Id = 2,
                             IsMain = true,
                             ItemListingId = 2,
+                            OwnerId = 1,
+                            PublicId = "gtxlx5rfi3b9wmtzakro",
+                            Url = "https://res.cloudinary.com/dub1phgqv/image/upload/v1639771116/gtxlx5rfi3b9wmtzakro.jpg"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            IsMain = true,
+                            ItemListingId = 3,
                             OwnerId = 2,
-                            PublicId = "folding_table_rgrmom",
-                            Url = "https://res.cloudinary.com/dub1phgqv/image/upload/v1639551492/tcl_tv_ufvgvz.jpg"
+                            PublicId = "qhtucrxynkepvpsgn189",
+                            Url = "https://res.cloudinary.com/dub1phgqv/image/upload/v1639772129/qhtucrxynkepvpsgn189.jpg"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            IsMain = true,
+                            ItemListingId = 4,
+                            OwnerId = 2,
+                            PublicId = "kfbjlfkldkruumqzgrbs",
+                            Url = "https://res.cloudinary.com/dub1phgqv/image/upload/v1639761761/kfbjlfkldkruumqzgrbs.jpg"
                         });
                 });
 
@@ -218,9 +236,9 @@ namespace API.Migrations
                             Archived = false,
                             CategoryName = "Furniture",
                             Condition = 2,
-                            CreatedOn = new DateTime(2021, 12, 17, 12, 19, 58, 95, DateTimeKind.Local).AddTicks(5052),
-                            Description = "Round folding dining table from Bob's Furniture Store.\nGreat for smaller dining areas/apartments. Smoke-free home.\n\nAsking price - $50.",
-                            OwnerId = 2,
+                            CreatedOn = new DateTime(2021, 12, 17, 15, 32, 15, 717, DateTimeKind.Local).AddTicks(8414),
+                            Description = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis magnam reprehenderit saepe odit ullam, laboriosam, cumque repudiandae nam consequuntur enim labore, accusantium repellendus tempore? Cumque perspiciatis explicabo, cum corrupti provident minus possimus error eos repellendus? Suscipit unde neque alias atque aliquid. Perspiciatis provident dolore obcaecati ipsum tempore ad, reiciendis consequuntur? Expedita alias temporibus, numquam dolore veniam quasi! Alias, rerum quod. Eius perferendis aperiam incidunt, minus totam, dolorem exercitationem a neque explicabo, vitae ipsa provident fugit ea possimus nostrum consectetur magnam non quasi. Accusantium sed voluptatibus delectus quae asperiores eligendi illo consequuntur eum nemo quaerat ad excepturi tempora dolore itaque nisi inventore magni explicabo, suscipit esse doloribus! Molestias animi totam illum doloribus magnam unde est. Blanditiis nisi quos dolorem maiores voluptatem laborum dolor amet, architecto voluptas dignissimos similique assumenda voluptate mollitia veniam eaque officia deleniti tempora ea repellendus. Facere vel pariatur, laborum impedit et maxime, quo molestiae obcaecati doloremque accusantium adipisci?",
+                            OwnerId = 1,
                             Price = 50.0,
                             Title = "Round Folding Dining Table"
                         },
@@ -229,12 +247,36 @@ namespace API.Migrations
                             Id = 2,
                             Archived = false,
                             CategoryName = "Electronics",
-                            Condition = 0,
-                            CreatedOn = new DateTime(2021, 12, 17, 12, 19, 58, 95, DateTimeKind.Local).AddTicks(5064),
-                            Description = "Absolutely brand new in the box (unopened box) 55 inch TCL 4K UHD Smart Roku TV.\n.Condition: Brand New In the (unopened). Same condition as you get from a store. Price: $330 Cash and Pick up only.",
+                            Condition = 1,
+                            CreatedOn = new DateTime(2021, 12, 17, 15, 32, 15, 717, DateTimeKind.Local).AddTicks(8426),
+                            Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem cupiditate eaque aliquid in velit modi sit obcaecati fuga aperiam quidem. A necessitatibus quaerat facilis tenetur iste, ratione mollitia explicabo eos iure dolorem totam odit vel saepe voluptates, culpa obcaecati, excepturi illo. Inventore soluta provident cum vero, voluptas eaque beatae doloribus labore vel deleniti eius ad est autem sequi officiis. Voluptas, magnam atque numquam hic tenetur optio aut culpa maxime minus inventore, recusandae, aliquid magni quo laboriosam odio pariatur animi? Iusto asperiores saepe voluptate quia. Saepe cupiditate architecto perferendis. Natus nulla amet recusandae excepturi quia unde error provident porro vitae saepe veritatis praesentium earum impedit est corrupti facere facilis enim qui, labore mollitia laudantium ullam magnam. Quidem sint illum ducimus molestiae dolor fugit temporibus libero explicabo!",
+                            OwnerId = 1,
+                            Price = 1119.99,
+                            Title = "Brand New Canon EOS 60D"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Archived = false,
+                            CategoryName = "Sporting",
+                            Condition = 5,
+                            CreatedOn = new DateTime(2021, 12, 17, 15, 32, 15, 717, DateTimeKind.Local).AddTicks(8428),
+                            Description = "'Mint condition'",
                             OwnerId = 2,
                             Price = 330.0,
-                            Title = "Brand New 55\" inch TCL - 4K UHD Smart Roku TV"
+                            Title = "Vitage Football"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Archived = false,
+                            CategoryName = "Misc.",
+                            Condition = 4,
+                            CreatedOn = new DateTime(2021, 12, 17, 15, 32, 15, 717, DateTimeKind.Local).AddTicks(8430),
+                            Description = "Dunkin's new roast blend. Product is not same as the image shown. I already drank the coffee...\n\nYou can actually disregard this post.",
+                            OwnerId = 2,
+                            Price = 6.9900000000000002,
+                            Title = "Cup of Coffee"
                         });
                 });
 

@@ -64,10 +64,7 @@ namespace API.Controllers
 
                 if (result) return Ok();
             }
-            catch (Exception ex)
-            {
-
-            }
+            catch (Exception) { }
 
             return StatusCode(StatusCodes.Status403Forbidden);
         }

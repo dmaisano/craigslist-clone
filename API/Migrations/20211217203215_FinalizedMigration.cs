@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Migrations
 {
-    public partial class AddedEmailColOnUsers : Migration
+    public partial class FinalizedMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -111,34 +111,64 @@ namespace API.Migrations
                 value: "Furniture");
 
             migrationBuilder.InsertData(
+                table: "Categories",
+                column: "Name",
+                value: "Misc.");
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                column: "Name",
+                value: "Sporting");
+
+            migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CreatedOn", "Email", "PasswordHash", "PasswordSalt", "Role", "UpdatedOn", "UserName" },
-                values: new object[] { 1, new DateTime(2021, 12, 16, 18, 8, 3, 879, DateTimeKind.Local).AddTicks(3575), "admin@domain.net", new byte[] { 115, 19, 131, 155, 13, 221, 232, 38, 212, 195, 231, 45, 159, 181, 149, 222, 91, 195, 208, 98, 156, 26, 148, 102, 80, 198, 71, 175, 198, 167, 59, 15, 234, 220, 140, 178, 222, 194, 232, 199, 193, 148, 248, 60, 172, 198, 158, 164, 75, 227, 231, 121, 30, 165, 57, 141, 232, 138, 115, 172, 247, 252, 66, 76 }, new byte[] { 118, 151, 94, 52, 180, 33, 149, 26, 100, 123, 2, 86, 143, 164, 127, 251, 54, 235, 19, 106, 151, 86, 116, 35, 85, 232, 53, 21, 206, 220, 6, 117, 174, 236, 105, 167, 31, 251, 40, 178, 216, 19, 161, 42, 113, 215, 217, 112, 33, 126, 192, 174, 175, 102, 44, 240, 52, 0, 244, 114, 192, 177, 147, 28, 70, 96, 113, 179, 171, 144, 233, 108, 244, 57, 76, 94, 166, 59, 79, 14, 111, 88, 205, 125, 76, 62, 20, 204, 195, 212, 250, 92, 209, 216, 135, 187, 59, 155, 60, 254, 92, 224, 6, 170, 148, 194, 152, 164, 119, 29, 89, 252, 174, 27, 216, 109, 233, 196, 139, 210, 51, 224, 222, 144, 98, 250, 88, 78 }, "Admin", new DateTime(2021, 12, 16, 18, 8, 3, 879, DateTimeKind.Local).AddTicks(3577), "admin" });
+                values: new object[] { 1, new DateTime(2021, 12, 17, 15, 32, 15, 717, DateTimeKind.Local).AddTicks(6863), "admin@domain.net", new byte[] { 147, 169, 37, 239, 194, 203, 14, 83, 61, 156, 178, 154, 153, 96, 181, 145, 174, 140, 36, 35, 0, 8, 234, 38, 28, 187, 199, 223, 74, 132, 207, 136, 47, 207, 69, 210, 221, 210, 129, 238, 188, 63, 109, 227, 88, 254, 191, 84, 63, 6, 160, 246, 114, 104, 84, 232, 180, 43, 163, 166, 54, 197, 38, 123 }, new byte[] { 21, 91, 132, 4, 201, 163, 152, 203, 197, 43, 84, 153, 34, 229, 242, 111, 71, 156, 68, 155, 172, 158, 127, 180, 12, 57, 52, 19, 46, 236, 191, 126, 188, 12, 107, 45, 120, 3, 220, 213, 47, 49, 191, 127, 188, 218, 192, 24, 150, 167, 153, 230, 178, 86, 12, 102, 54, 4, 156, 86, 149, 172, 138, 57, 156, 253, 44, 123, 170, 87, 171, 159, 74, 219, 70, 252, 16, 106, 167, 222, 247, 143, 176, 19, 79, 120, 77, 22, 29, 75, 11, 78, 169, 213, 248, 168, 187, 165, 129, 157, 12, 134, 144, 113, 53, 211, 202, 207, 147, 111, 159, 216, 217, 23, 220, 160, 75, 11, 221, 118, 136, 194, 106, 196, 135, 18, 165, 179 }, "Admin", new DateTime(2021, 12, 17, 15, 32, 15, 717, DateTimeKind.Local).AddTicks(6866), "admin" });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CreatedOn", "Email", "PasswordHash", "PasswordSalt", "UpdatedOn", "UserName" },
-                values: new object[] { 2, new DateTime(2021, 12, 16, 18, 8, 3, 879, DateTimeKind.Local).AddTicks(3610), "member@domain.net", new byte[] { 76, 239, 71, 202, 199, 5, 201, 168, 244, 106, 204, 47, 169, 116, 193, 207, 172, 92, 152, 44, 145, 210, 101, 65, 244, 71, 57, 20, 97, 112, 22, 135, 229, 103, 205, 160, 38, 16, 175, 68, 175, 188, 208, 6, 251, 67, 80, 98, 165, 120, 224, 208, 141, 100, 104, 184, 146, 123, 252, 74, 146, 8, 71, 24 }, new byte[] { 71, 224, 40, 52, 148, 178, 245, 111, 38, 185, 236, 75, 104, 55, 82, 102, 82, 110, 27, 177, 42, 92, 73, 101, 228, 129, 29, 252, 45, 160, 119, 71, 102, 106, 9, 103, 33, 106, 68, 253, 25, 235, 158, 127, 95, 64, 109, 235, 4, 255, 57, 44, 222, 54, 255, 54, 138, 31, 51, 11, 163, 251, 251, 78, 214, 84, 71, 45, 159, 159, 125, 224, 132, 89, 111, 151, 143, 207, 59, 198, 32, 53, 226, 49, 91, 237, 19, 217, 31, 78, 167, 142, 184, 205, 110, 87, 169, 217, 163, 12, 224, 242, 146, 18, 29, 140, 251, 104, 153, 129, 38, 187, 124, 101, 220, 178, 45, 182, 120, 42, 11, 29, 189, 105, 237, 193, 73, 226 }, new DateTime(2021, 12, 16, 18, 8, 3, 879, DateTimeKind.Local).AddTicks(3611), "member" });
+                values: new object[] { 2, new DateTime(2021, 12, 17, 15, 32, 15, 717, DateTimeKind.Local).AddTicks(6903), "member@domain.net", new byte[] { 24, 220, 40, 187, 142, 89, 214, 58, 41, 200, 130, 250, 104, 153, 61, 29, 177, 200, 226, 163, 220, 22, 195, 102, 161, 169, 56, 41, 110, 176, 208, 221, 239, 209, 7, 38, 246, 66, 191, 11, 217, 159, 50, 9, 1, 252, 115, 1, 133, 192, 139, 212, 69, 170, 231, 75, 96, 185, 85, 101, 50, 4, 182, 1 }, new byte[] { 49, 135, 231, 204, 147, 28, 81, 67, 173, 227, 158, 31, 217, 228, 235, 13, 234, 2, 103, 126, 88, 130, 133, 247, 103, 167, 19, 184, 141, 131, 43, 181, 253, 65, 194, 211, 94, 15, 148, 172, 235, 178, 189, 245, 83, 164, 17, 42, 157, 214, 6, 135, 152, 234, 219, 151, 26, 15, 25, 165, 27, 105, 53, 48, 113, 181, 76, 211, 74, 250, 216, 63, 73, 134, 122, 187, 162, 193, 81, 233, 117, 42, 24, 160, 242, 255, 220, 124, 122, 44, 91, 211, 162, 131, 57, 30, 228, 139, 111, 255, 45, 7, 241, 167, 132, 228, 64, 243, 87, 184, 38, 20, 242, 184, 17, 224, 62, 124, 157, 108, 175, 207, 108, 104, 223, 124, 138, 119 }, new DateTime(2021, 12, 17, 15, 32, 15, 717, DateTimeKind.Local).AddTicks(6905), "member" });
 
             migrationBuilder.InsertData(
                 table: "ItemListings",
                 columns: new[] { "Id", "CategoryName", "Condition", "CreatedOn", "Description", "OwnerId", "Price", "Title" },
-                values: new object[] { 1, "Furniture", 2, new DateTime(2021, 12, 16, 18, 8, 3, 879, DateTimeKind.Local).AddTicks(4920), "Round folding dining table from Bob's Furniture Store.\nGreat for smaller dining areas/apartments. Smoke-free home.\n\nAsking price - $50.", 2, 50.0, "Round Folding Dining Table" });
+                values: new object[] { 1, "Furniture", 2, new DateTime(2021, 12, 17, 15, 32, 15, 717, DateTimeKind.Local).AddTicks(8414), "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis magnam reprehenderit saepe odit ullam, laboriosam, cumque repudiandae nam consequuntur enim labore, accusantium repellendus tempore? Cumque perspiciatis explicabo, cum corrupti provident minus possimus error eos repellendus? Suscipit unde neque alias atque aliquid. Perspiciatis provident dolore obcaecati ipsum tempore ad, reiciendis consequuntur? Expedita alias temporibus, numquam dolore veniam quasi! Alias, rerum quod. Eius perferendis aperiam incidunt, minus totam, dolorem exercitationem a neque explicabo, vitae ipsa provident fugit ea possimus nostrum consectetur magnam non quasi. Accusantium sed voluptatibus delectus quae asperiores eligendi illo consequuntur eum nemo quaerat ad excepturi tempora dolore itaque nisi inventore magni explicabo, suscipit esse doloribus! Molestias animi totam illum doloribus magnam unde est. Blanditiis nisi quos dolorem maiores voluptatem laborum dolor amet, architecto voluptas dignissimos similique assumenda voluptate mollitia veniam eaque officia deleniti tempora ea repellendus. Facere vel pariatur, laborum impedit et maxime, quo molestiae obcaecati doloremque accusantium adipisci?", 1, 50.0, "Round Folding Dining Table" });
 
             migrationBuilder.InsertData(
                 table: "ItemListings",
                 columns: new[] { "Id", "CategoryName", "Condition", "CreatedOn", "Description", "OwnerId", "Price", "Title" },
-                values: new object[] { 2, "Electronics", 0, new DateTime(2021, 12, 16, 18, 8, 3, 879, DateTimeKind.Local).AddTicks(4933), "Absolutely brand new in the box (unopened box) 55 inch TCL 4K UHD Smart Roku TV.\n.Condition: Brand New In the (unopened). Same condition as you get from a store. Price: $330 Cash and Pick up only.", 2, 330.0, "Brand New 55\" inch TCL - 4K UHD Smart Roku TV" });
+                values: new object[] { 2, "Electronics", 1, new DateTime(2021, 12, 17, 15, 32, 15, 717, DateTimeKind.Local).AddTicks(8426), "Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem cupiditate eaque aliquid in velit modi sit obcaecati fuga aperiam quidem. A necessitatibus quaerat facilis tenetur iste, ratione mollitia explicabo eos iure dolorem totam odit vel saepe voluptates, culpa obcaecati, excepturi illo. Inventore soluta provident cum vero, voluptas eaque beatae doloribus labore vel deleniti eius ad est autem sequi officiis. Voluptas, magnam atque numquam hic tenetur optio aut culpa maxime minus inventore, recusandae, aliquid magni quo laboriosam odio pariatur animi? Iusto asperiores saepe voluptate quia. Saepe cupiditate architecto perferendis. Natus nulla amet recusandae excepturi quia unde error provident porro vitae saepe veritatis praesentium earum impedit est corrupti facere facilis enim qui, labore mollitia laudantium ullam magnam. Quidem sint illum ducimus molestiae dolor fugit temporibus libero explicabo!", 1, 1119.99, "Brand New Canon EOS 60D" });
+
+            migrationBuilder.InsertData(
+                table: "ItemListings",
+                columns: new[] { "Id", "CategoryName", "Condition", "CreatedOn", "Description", "OwnerId", "Price", "Title" },
+                values: new object[] { 3, "Sporting", 5, new DateTime(2021, 12, 17, 15, 32, 15, 717, DateTimeKind.Local).AddTicks(8428), "'Mint condition'", 2, 330.0, "Vitage Football" });
+
+            migrationBuilder.InsertData(
+                table: "ItemListings",
+                columns: new[] { "Id", "CategoryName", "Condition", "CreatedOn", "Description", "OwnerId", "Price", "Title" },
+                values: new object[] { 4, "Misc.", 4, new DateTime(2021, 12, 17, 15, 32, 15, 717, DateTimeKind.Local).AddTicks(8430), "Dunkin's new roast blend. Product is not same as the image shown. I already drank the coffee...\n\nYou can actually disregard this post.", 2, 6.9900000000000002, "Cup of Coffee" });
 
             migrationBuilder.InsertData(
                 table: "ItemImages",
                 columns: new[] { "Id", "IsMain", "ItemListingId", "OwnerId", "PublicId", "Url" },
-                values: new object[] { 1, true, 1, 2, "tcl_tv_ufvgvz", "https://res.cloudinary.com/dub1phgqv/image/upload/v1639551491/folding_table_rgrmom.jpg" });
+                values: new object[] { 1, true, 1, 1, "folding_table_rgrmom", "https://res.cloudinary.com/dub1phgqv/image/upload/v1639551491/folding_table_rgrmom.jpg" });
 
             migrationBuilder.InsertData(
                 table: "ItemImages",
                 columns: new[] { "Id", "IsMain", "ItemListingId", "OwnerId", "PublicId", "Url" },
-                values: new object[] { 2, true, 2, 2, "folding_table_rgrmom", "https://res.cloudinary.com/dub1phgqv/image/upload/v1639551492/tcl_tv_ufvgvz.jpg" });
+                values: new object[] { 2, true, 2, 1, "gtxlx5rfi3b9wmtzakro", "https://res.cloudinary.com/dub1phgqv/image/upload/v1639771116/gtxlx5rfi3b9wmtzakro.jpg" });
+
+            migrationBuilder.InsertData(
+                table: "ItemImages",
+                columns: new[] { "Id", "IsMain", "ItemListingId", "OwnerId", "PublicId", "Url" },
+                values: new object[] { 3, true, 3, 2, "qhtucrxynkepvpsgn189", "https://res.cloudinary.com/dub1phgqv/image/upload/v1639772129/qhtucrxynkepvpsgn189.jpg" });
+
+            migrationBuilder.InsertData(
+                table: "ItemImages",
+                columns: new[] { "Id", "IsMain", "ItemListingId", "OwnerId", "PublicId", "Url" },
+                values: new object[] { 4, true, 4, 2, "kfbjlfkldkruumqzgrbs", "https://res.cloudinary.com/dub1phgqv/image/upload/v1639761761/kfbjlfkldkruumqzgrbs.jpg" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ItemImages_ItemListingId",

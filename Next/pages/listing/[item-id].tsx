@@ -33,8 +33,6 @@ export const getServerSideProps: GetServerSideProps<{
   let item: IItemListing | null = null;
   const itemQueryId = (ctx.params as ParsedUrlQuery)["item-id"] as string;
 
-  console.log({ itemQueryId, url: `${API_URL}/item-listing/${itemQueryId}` });
-
   try {
     const res = await axios.get<any>(`${API_URL}/item-listing/${itemQueryId}`);
 
@@ -62,7 +60,6 @@ const ViewItemPage: NextPage<
     const res = await archiveItem({ itemId: item?.id, token });
 
     if (res) {
-      console.log({ success: res });
       router.back();
     }
   };
