@@ -109,7 +109,7 @@ On my machine I ran the project using Node `v16.13.1` and npm version `8.1.2`
 
 Primarily checkout into smaller feature branches and would merge them back into master.
 
-For the purpose of this small demo I did not really need to revisit older branches to pick up where I left off / add new features or update logic once done. If I had t
+For the purpose of this small demo I did not really need to revisit older branches to pick up where I left off / add new features or update logic once done. If I had to revist features or sections of the application to further expand on the existing logic, I would merge in the latest changes from the master branch to keep everything up to date.
 
 ## Images
 
