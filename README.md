@@ -1,14 +1,14 @@
 ### Table of Contents
 
-- [Summary](##summary)
+- [Summary](#summary)
 
-- [Usage](##usage)
+- [Usage](#usage)
 
-- [Backend](##backend)
+- [Backend](#backend)
 
-- [Git](##git)
+- [Git](#git)
 
-- [Images](##images)
+- [Images](#images)
 
 ## Summary (simplified)
 
